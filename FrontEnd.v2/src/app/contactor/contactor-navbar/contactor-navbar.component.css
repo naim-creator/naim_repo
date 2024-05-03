@@ -1,0 +1,13 @@
+#logo{
+  width: 180px;
+}
+
+.navbar-nav .nav-item{
+  margin-left: 50px;
+  text-transform: capitalize;
+}
+
+.active{
+  font-weight: 600;
+  color: #3b7ddd !important;
+}

@@ -1,0 +1,72 @@
+.container {
+  padding-top: 50px;
+}
+
+.devis-request {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+  padding-bottom: 15px;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #3b7ddd;
+  text-align: center;
+}
+
+p {
+  font-size: 16px;
+}
+
+p span {
+  text-decoration: underline;
+  color: #0a2a59;
+}
+
+.form-control {
+  border-radius: 3px;
+  box-shadow: none;
+  background-image: linear-gradient(rgba(59, 125, 221, 0.07), #ffffff);
+}
+
+.form-label {
+  font-size: 16px;
+}
+
+.bi-plus-square-fill {
+  font-size: 24px;
+  color: #3b7ddd;
+  cursor: pointer;
+}
+
+.btn {
+  border-radius: 3px;
+}
+
+.btn-primary{
+  background-color: #3b7ddd;
+}
+
+.bi {
+  font-size: 16px;
+  margin-top: 5px;
+  cursor: pointer;
+  color: #0a2a59;
+}
+
+.collapse {
+  position: absolute !important;
+  z-index: 1;
+}
+
+li{
+  cursor: pointer;
+}
+
+.alert{
+  margin: 0px;
+  padding: 5px 25px;
+  border-radius: 3px;
+}
