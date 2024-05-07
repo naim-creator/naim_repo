@@ -151,6 +151,187 @@ img{
   margin-right: 390px;
   border-radius: 50px;
 }
+/*---------------------------------------------------------------------------------------------------------------*/
 
 
-,
+/*.home-bottom .container-fluid{*/
+/*  background-image: linear-gradient(to bottom, rgb(10, 2, 108), rgba(6, 6, 150, 0.94));*/
+/*  scroll-behavior: auto;*/
+/*  height: 1150px;*/
+/*}*/
+/*.home-bottom h1{*/
+/*  padding-top: 75px;*/
+/*  text-align: center;*/
+/*  color: white;*/
+/*  font-size: 45px;*/
+/*  font-weight: bolder;*/
+/*}*/
+/*.home-bottom span{*/
+/*  margin-left: 800px;*/
+/*  width: 15%;*/
+/*  text-align: center;*/
+/*  justify-content: center;*/
+/*  height: 25px;*/
+/*  color: rgba(210, 210, 225, 0.91);*/
+/*  background-color: #0865ef;*/
+/*  border-radius: 50px;*/
+/*  border-style: none;*/
+/*  text-decoration: none;*/
+/*  box-shadow: none;*/
+/*}*/
+/*.home-bottom i{*/
+/*  margin-top: 10px !important;*/
+/*  font-size: 60px;*/
+/*}*/
+/*.home-bottom .card{*/
+/*  margin-top: 10px;*/
+/*  margin-left: 20px;*/
+/*  background-color: white;*/
+/*  border-radius: 7px;*/
+
+/*}*/
+/*.home-bottom .bg-card{*/
+/*  padding-bottom: 70px;*/
+/*  transition: 0.5s;*/
+/*}*/
+/*.home-bottom .bg-card:hover{*/
+/*  cursor: pointer;*/
+/*  scale: 1.03;*/
+/*  background-color: rgb(245, 242, 224);*/
+/*}*/
+
+/*.home-bottom .card-title{*/
+/*  margin-top: 5px;*/
+/*  font-size: 25px;*/
+/*  font-weight: bolder;*/
+/*}*/
+/*.home-bottom .card-text{*/
+/*  font-family: "Segoe UI Semibold", ui-serif;*/
+/*  font-size: 15px;*/
+/*  line-height: 1.5;*/
+/*}*/
+/*.home-bottom table{*/
+/*  margin-left: 15%;*/
+/*}*/
+/*.home-bottom a i{*/
+/*  position: relative;*/
+/*  margin-top: 50px;*/
+/*  font-size: 17px;*/
+/*}*/
+/*.home-bottom a{*/
+/*  width: 120px;*/
+/*  position: absolute;*/
+/*  margin-top: 40px!important;*/
+/*  margin-left: 140px;*/
+/*}*/
+/*.home-bottom .newsletter{*/
+/*  background-image:linear-gradient(to right,#130FFF, #00009C ,#130FFF); ;*/
+/*  background-size: cover;*/
+/*  width: 1851px;*/
+/*  height: 300px;*/
+/*  color: white;*/
+/*}*/
+/*.home-bottom .left p{*/
+/*  margin-top: 10px;*/
+/*  font-size: 20px;*/
+/*}*/
+/*.home-bottom .right input{*/
+/*  background-color: transparent;*/
+/*  box-shadow: none;*/
+/*  border-color: whitesmoke;*/
+/*  width: 345px;*/
+/*  height: 50px;*/
+/*  border-radius: 5px;*/
+/*  border-width: 2px;*/
+/*  position:absolute;*/
+/*  margin-left: 1250px;*/
+/*  margin-top: -75px;*/
+/*  font-weight: bold;*/
+/*  font-size: 20px;*/
+/*  color: white!important;*/
+
+/*}*/
+/*.home-bottom .right button{*/
+/*  position: absolute;*/
+/*  margin-left: 1610px;*/
+/*  margin-top: -75px;*/
+/*  width: 155px;*/
+/*  height: 50px;*/
+/*  letter-spacing: 3px;*/
+/*  background-color: #050572;*/
+/*  border: none;*/
+/*  transition: 0.4s;*/
+/*}*/
+/*.home-bottom .right button:hover{*/
+/*  background-color: orangered;*/
+/*  scale: 1.08;*/
+/*}*/
+/*.home-bottom .right input::placeholder{*/
+/*  color: white;*/
+/*  padding-left: 5px;*/
+/*}*/
+/*.home-bottom .right p{*/
+/*  position: absolute;*/
+/*  margin-left: 1280px;*/
+/*}*/
+/*.home-bottom .btn-contact{*/
+/*  position: relative;*/
+/*  font-size: 20px;*/
+/*  text-decoration: none;*/
+/*  color:white;*/
+/*  background-color:  orangered;*/
+/*  border-radius: 5px;*/
+/*  padding: 13px;*/
+/*  transition: 0.3s;*/
+/*  font-weight: bold;*/
+/*  border-style: none;*/
+/*  width: 230px;*/
+/*  margin-left: -290px;*/
+/*  margin-bottom: -150px;*/
+/*}*/
+/*.home-bottom .btn-contact:hover{*/
+/*  background-color: #0983e7;*/
+/*  scale: 1.05;*/
+/*}*/
+
+/*.home-bottom .not-first-child{*/
+/*  position: absolute;*/
+/*  font-weight: bold;*/
+/*  font-size: 25px;*/
+/*}*/
+/*.home-bottom .fonc-bott{*/
+/*  margin-left: 130px;*/
+/*  margin-top: -60px;*/
+/*  line-height: 2.3;*/
+/*}*/
+/*.home-bottom .fonc-bott a{*/
+/*  font-size: 20px;*/
+/*  font-weight: normal;*/
+/*  text-decoration: none;*/
+/*  color: white ;*/
+/*  transition: 0.4s;*/
+/*}*/
+/*.home-bottom .fonc-bott a:hover{*/
+/*  color: orangered;*/
+/*}*/
+
+/*.home-bottom ul{*/
+/*  text-decoration:none;*/
+/*  display: flex;*/
+/*  justify-content: space-evenly;*/
+/*}*/
+
+/*.home-bottom ul li{*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.home-bottom ul li a i{*/
+/*  font-size: 25px;*/
+/*}*/
+/*.home-bottom .copyright{*/
+/*  color: white;*/
+/*  position: absolute;*/
+/*  margin-top: 180px;*/
+/*  margin-left: 700px;*/
+/*  letter-spacing: 3px;*/
+/*}*/
