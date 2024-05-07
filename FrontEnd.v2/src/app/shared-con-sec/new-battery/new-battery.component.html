@@ -1,0 +1,65 @@
+<div class="container">
+  <h1>ajouter une batterie</h1>
+  <div class="d-flex align-items-center w-100 gap-5">
+    <div class="image">
+      <img [src]=imageLink>
+      <input type="file" class="form-control" (change)="handleFileInput($event)">
+    </div>
+    <div class="form">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Model :</label>
+          <input class="form-control" [(ngModel)]="battery.model">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Voltage nominal :</label>
+          <input class="form-control" [(ngModel)]="battery.nominal_voltage">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Charge maximal :</label>
+          <input class="form-control" [(ngModel)]="battery.maximum_load_voltage">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3">
+          <label class="form-label">Décharge maximal :</label>
+          <input class="form-control" [(ngModel)]="battery.maximum_discharge_voltage">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Voltage nominal :</label>
+          <input class="form-control" [(ngModel)]="battery.nominal_voltage">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Capacité :</label>
+          <input class="form-control" [(ngModel)]="battery.storage_capacity">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Température :</label>
+          <input class="form-control" [(ngModel)]="battery.operating_temperature">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <label class="form-label"> Cycle de vie :</label>
+          <input class="form-control" type="number" placeholder="mm" [(ngModel)]="battery.life_cycle">
+        </div>
+        <div class="col">
+          <label class="form-label"> Durée de vie :</label>
+          <input class="form-control" type="number" placeholder="mm" [(ngModel)]="battery.lifespan">
+        </div>
+        <div class="col-3">
+          <label class="form-label">prix :</label>
+          <input class="form-control" type="number" [(ngModel)]="battery.price">
+        </div>
+        <div class="col-2">
+          <label class="form-label">quantité: </label>
+          <input class="form-control" type="number" [(ngModel)]="battery.quantity">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="saveBattery()">enregistrer <i class="bi bi-floppy ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

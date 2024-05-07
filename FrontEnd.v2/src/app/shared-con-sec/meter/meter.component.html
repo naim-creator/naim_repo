@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <h1>Stock des compteurs</h1>
+  <div class="d-flex flex-wrap align-items-center w-100">
+    <div class="stock-level">
+      <div class="d-flex flex-column align-items-center gap-5">
+        <div class="w-100 d-flex align-items-center">
+          <input class="form-control" type="search" placeholder="search" (keyup.enter)="search()" [(ngModel)]="sh">
+          <button class="btn btn-primary" (click)="search()"><i class="bi bi-search"></i></button>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <circle-progress
+            [percent]="stLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#3b7ddd'"
+            [innerStrokeColor]="'#f4f4f4'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>Niveau de stock</span>
+          <button class="btn btn-primary mt-5" routerLink="./new">ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="stock">
+      <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="dataLoading">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        </div>
+        <span class="ms-2">Chargement...</span>
+      </div>
+      <div class="element" *ngFor="let m of meterList">
+        <div class="d-flex justify-content-end mb-2">
+          <button class="btn btn-light" (click)="selectMeter(m)" data-bs-toggle="modal"
+                  data-bs-target="#updateModal">modifier
+          </button>
+          <button class="btn btn-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                  (click)="selectMeter(m)">supprimer
+          </button>
+        </div>
+        <div class="d-flex align-items-center gap-5">
+          <div class="image">
+            <img [src]=getImageUrl(m.image)>
+          </div>
+          <div class="about">
+            <div class="d-flex align-items-center">
+              <h2>{{ m.model }}</h2>
+            </div>
+            <p>type connexion : <span>{{ m.connexion_type }}</span> V</p>
+            <p>capacité : <span>{{ m.capacity }}</span> V</p>
+            <p>type : <span>{{ m.type }}</span></p>
+            <p>prix : <span class="text-danger" style="text-decoration: underline"> {{ m.price }} dinar</span></p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+          <span class="me-3">{{ m.quantity }} pièces</span>
+          <input class="form-control" type="number" id="quantity" [(ngModel)]="quantity">
+          <i class="bi bi-dash-square-fill ms-2" (click)="minusQuantity(m)"></i>
+          <i class="bi bi-plus-square-fill ms-2" (click)="plusQuantity(m)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-5 pe-5">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item me-2"><a class="page-link request">{{ totalElements }} modèle</a></li>
+        <li class="page-item" (click)="previousPage()"><a class="page-link"><i class="bi bi-caret-left"></i></a></li>
+        <li class="page-item ms-2 me-2"><a class="page-link text-center" style="width: 40px;">{{ pageNo + 1 }}</a></li>
+        <li class="page-item" (click)="nextPage()"><a class="page-link"><i class="bi bi-caret-right"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Supprimer</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr d'avoir supprimé cette compteur ?
+      </div>
+      <div class="d-flex justify-content-end p-3">
+        <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">annuler</button>
+        <button type="button" class="btn btn-danger" (click)="deleteMeter()" data-bs-dismiss="modal">supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Modifier</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Model :</label>
+            <input class="form-control" [(ngModel)]="meter.model">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label class="form-label">Type de connexion :</label>
+            <select class="form-control" [(ngModel)]="meter.connexion_type">
+              <option>Liste des type de connexion</option>
+              <option value="Compteur production + Compteur consommation">Compteur production + Compteur consommation
+              </option>
+              <option value="Compteur bi-directionnel">Compteur bi-directionnel</option>
+              <option value="Système d'autoconsommation avec surplus">Système d'autoconsommation avec surplus</option>
+              <option value="Système d'autoconsommation sans surplus">Système d'autoconsommation sans surplus</option>
+            </select>
+          </div>
+          <div class="col">
+            <label class="form-label">Capacité :</label>
+            <input class="form-control" [(ngModel)]="meter.capacity">
+          </div>
+          <div class="col">
+            <label class="form-label">Type :</label>
+            <select class="form-control" [(ngModel)]="meter.type">
+              <option>Liste des types des compteurs</option>
+              <option value="électromécanique">électromécanique</option>
+              <option value="électronique">électronique</option>
+              <option value="Linky">Linky</option>
+              <option value="communicant">communicant</option>
+              <option value="production">production</option>
+              <option value="Micro-onduleur">Micro-onduleur</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-3">
+            <label class="form-label">prix :</label>
+            <input class="form-control" type="number" [(ngModel)]="meter.price">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end p-3">
+        <button type="button" class="btn btn-primary" (click)="updateMeter()" data-bs-dismiss="modal">enregistrer
+          <i class="bi bi-floppy ms-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

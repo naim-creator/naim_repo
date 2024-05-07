@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Ajouter un Fournisseur</h1>
+  <div class="alert alert-danger" *ngIf="errorMessage != ''">
+    {{errorMessage}}
+  </div>
+  <div class="row mt-5">
+    <div class="col p-5">
+      <div class="image-holder">
+        <img src="assets/Supplier.jpeg" id="bg-pic">
+      </div>
+    </div>
+    <div class="col p-5">
+      <div class="row">
+        <div class="col mt-2">
+          <label class="form-label">Nom :</label>
+          <input class="form-control" type="text" [(ngModel)]="supplier.firstName">
+        </div>
+        <div class="col mt-2">
+          <label class="form-label">Prénom :</label>
+          <input class="form-control" type="text" [(ngModel)]="supplier.lastName">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col mt-2">
+          <label class="form-label">Télèhone :</label>
+          <input class="form-control" type="tel" [(ngModel)]="supplier.phone">
+        </div>
+        <div class="col mt-2">
+          <label class="form-label">Email :</label>
+          <input class="form-control" type="email" [(ngModel)]="supplier.email">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6 mt-2">
+          <label class="form-label">nom d'entreprise :</label>
+          <input class="form-control" type="text" [(ngModel)]="supplier.SupplierCompanyName">
+        </div>
+      </div>
+        <div class="col mt-3" >
+          <button class="btn btn-primary" (click)="saveSupplier()">enregsitrer <i class="bi bi-floppy ms-2"></i></button>
+        </div>
+      </div>
+    </div>

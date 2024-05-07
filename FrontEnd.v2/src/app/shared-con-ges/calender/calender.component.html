@@ -1,0 +1,111 @@
+<div class="w-100 h-100 d-flex justify-content-center align-items-center position-absolute" *ngIf="dataLoading" style="z-index: 2">
+  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+  </div>
+  <span class="ms-2">Chargement...</span>
+</div>
+<div #scheduler_here class="dhx_cal_container" style="width: 100%; height:90%; position: absolute; z-index: 0">
+  <div class="dhx_cal_navline">
+    <div class="dhx_cal_prev_button"></div>
+    <div class="dhx_cal_next_button"></div>
+    <div class="dhx_cal_today_button"></div>
+    <div class="dhx_cal_date"></div>
+    <div class="dhx_cal_tab" data-tab="day"></div>
+    <div class="dhx_cal_tab" data-tab="week"></div>
+    <div class="dhx_cal_tab" data-tab="month"></div>
+  </div>
+  <div class="dhx_cal_header"></div>
+  <div class="dhx_cal_data"></div>
+</div>
+
+
+<div class="modal" id="custom_form">
+  <div class="d-flex flex-column">
+    <div>
+      <label class="form-label">Chantier :</label>
+      <select class="form-control">
+        <option>choisir un chantier</option>
+        <option *ngFor="let c of constructionList">{{ c.description }}</option>
+      </select>
+    </div>
+    <div class="mt-5">
+      <div class="d-flex align-items-center">
+        <label class="form-label">Ouvrier :</label>
+        <div class="dropdown ms-3">
+          <button class="btn btn-list" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="d-flex align-items-center justify-content-start">
+              Liste des technicien
+            <span class="d-flex align-items-center ms-2">
+                <i class="bi bi-arrow-left-circle me-1" (click)="previous_page_tech()"></i>
+                <span class="page-number"> {{ pageNo_tech + 1 }} </span>
+                <i class="bi bi-arrow-right-circle ms-1" (click)="next_page_tech()"></i>
+            </span>
+            </span>
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let w of workersList" (click)="selectWorker(w)">
+              <a class="dropdown-item">{{ w.firstName }} {{ w.lastName }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="worker-list">
+        <span class="mt-2" *ngFor="let w of listWorkersSelected">
+          <span class="worker" *ngIf="w">
+            🧑‍🔧 {{ w.firstName }} {{ w.lastName }}
+            <i class="bi bi-x-circle ms-2 mt-1" (click)="removeWorkerFromSelectedList(w)"></i>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end p-3 position-absolute bottom-0 end-0">
+    <button class="btn btn-light" (click)="close_form()">fermer</button>
+    <button class="btn btn-primary ms-2" (click)="save_form()">enregistrer <i class="bi bi-floppy ms-1"></i></button>
+  </div>
+</div>
+
+<div class="modal" id="custom_form_update">
+  <div class="d-flex flex-column">
+    <div>
+      <label class="form-label">Chantier :</label>
+      <select class="form-control">
+        <option>choisir un chantier</option>
+        <option *ngFor="let c of constructionList">{{ c.description }}</option>
+      </select>
+    </div>
+    <div class="mt-5">
+      <div class="d-flex align-items-center">
+        <label class="form-label">Ouvrier :</label>
+        <div class="dropdown ms-3">
+          <button class="btn btn-list" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="d-flex align-items-center justify-content-start">
+              Liste des technicien
+            <span class="d-flex align-items-center ms-2">
+                <i class="bi bi-arrow-left-circle me-1" (click)="previous_page_tech()"></i>
+                <span class="page-number"> {{ pageNo_tech + 1 }} </span>
+                <i class="bi bi-arrow-right-circle ms-1" (click)="next_page_tech()"></i>
+            </span>
+            </span>
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let w of workersList" (click)="selectWorker(w)">
+              <a class="dropdown-item">{{ w.firstName }} {{ w.lastName }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="worker-list">
+        <span class="mt-2" *ngFor="let w of listWorkersSelected">
+          <span class="worker" *ngIf="w">
+            🧑‍🔧 {{ w.firstName }} {{ w.lastName }}
+            <i class="bi bi-x-circle ms-2 mt-1" (click)="removeWorkerFromSelectedList(w)"></i>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end p-3 position-absolute bottom-0 end-0">
+    <button class="btn btn-light" (click)="close_form()">fermer</button>
+    <button class="btn btn-primary ms-2" (click)="update_Event()">enregistrer <i class="bi bi-floppy ms-1"></i></button>
+  </div>
+</div>

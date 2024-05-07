@@ -1,0 +1,67 @@
+<div class="container">
+  <h1>ajouter un panneau solaire</h1>
+  <div class="d-flex align-items-center w-100 gap-5">
+    <div class="image">
+      <img [src]=imageLink>
+      <input type="file" class="form-control" (change)="handleFileInput($event)">
+    </div>
+    <div class="form">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Model :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.model">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Matérielle :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.materiel">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Adaptabilité :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.adaptability">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3">
+          <label class="form-label">Méthode d'installation :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.installation_method">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Longueur :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.width">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Hauteur :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.height">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Charge de poids maximal :</label>
+          <input class="form-control" [(ngModel)]="systemFixing.charge">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-4">
+          <label class="form-label">type de cellule : </label>
+          <select class="form-control" [(ngModel)]="systemFixing.type">
+            <option>choisir un type de cellule</option>
+            <option value="Toiture inclinée">Toiture inclinée</option>
+            <option value="Toiture plate">Toiture plate</option>
+            <option value="Sol">Sol</option>
+            <option value="Façade">Façade</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label class="form-label">prix: </label>
+          <input class="form-control" placeholder="TND" type="number" [(ngModel)]="systemFixing.price">
+        </div>
+        <div class="col-2">
+          <label class="form-label">quantité: </label>
+          <input class="form-control" type="number" [(ngModel)]="systemFixing.quantity">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="saveSystemFixing()">enregistrer <i class="bi bi-floppy ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container h-100">
+  <div class="d-flex justify-content-center pt-5 pb-5">
+    <img src="../../../assets/lg.png" width="200px">
+  </div>
+  <div class="alert alert-danger" *ngIf="errorMessage != null">
+    <span *ngFor="let msg of errorMessage">{{msg}} <br></span>
+  </div>
+  <div class="login-form">
+    <div class="image">
+      <img src="../../../assets/register-login.jpg" width="100%">
+    </div>
+    <div class="container-content">
+      <div class="w-100">
+        <label for="email" class="form-label">Email :</label>
+        <input id="email" class="form-control" placeholder="nom@exemple.com" [(ngModel)]="user.email">
+      </div>
+      <div class="w-100">
+        <label for="password" class="form-label">Password :</label>
+        <input id="password" class="form-control" [(ngModel)]="user.password">
+      </div>
+      <div class="d-flex justify-content-end w-75">
+        <button class="btn btn-primary me-5 d-flex align-items-center justify-content-center" (click)="login()">
+          connecter <i class="bi bi-box-arrow-in-right ms-2"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="welcome">
+  <span id="text"></span>
+</div>

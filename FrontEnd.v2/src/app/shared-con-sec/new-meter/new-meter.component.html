@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>ajouter un compteur</h1>
+  <div class="d-flex align-items-center w-100 gap-5">
+    <div class="image">
+      <img [src]=imageLink>
+      <input type="file" class="form-control" (change)="handleFileInput($event)">
+    </div>
+    <div class="form">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">modele : </label>
+          <input class="form-control" type="text" [(ngModel)]="meter.model">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Type de connexion :</label>
+          <select class="form-control" [(ngModel)]="meter.connexion_type">
+            <option>Liste des type de connexion</option>
+            <option value="Compteur production + Compteur consommation">Compteur production + Compteur consommation</option>
+            <option value="Compteur bi-directionnel">Compteur bi-directionnel</option>
+            <option value="Système d'autoconsommation avec surplus">Système d'autoconsommation avec surplus</option>
+            <option value="Système d'autoconsommation sans surplus">Système d'autoconsommation sans surplus</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label class="form-label">Capacité :</label>
+          <input class="form-control" [(ngModel)]="meter.capacity">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3">
+          <label class="form-label">Type :</label>
+          <select class="form-control" [(ngModel)]="meter.type">
+            <option>Liste des types des compteurs</option>
+            <option value="électromécanique">électromécanique</option>
+            <option value="électronique">électronique</option>
+            <option value="Linky">Linky</option>
+            <option value="communicant">communicant</option>
+            <option value="production">production</option>
+            <option value="Micro-onduleur">Micro-onduleur</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label class="form-label">prix :</label>
+          <input class="form-control" type="number" [(ngModel)]="meter.price">
+        </div>
+        <div class="col-2">
+          <label class="form-label">quantité: </label>
+          <input class="form-control" type="number" [(ngModel)]="meter.quantity">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="saveMeter()">enregistrer <i class="bi bi-floppy ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

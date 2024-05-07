@@ -1,0 +1,268 @@
+<div class="container">
+  <h1>Ajouter devis</h1>
+  <h2>Les information de demande devis : </h2>
+  <div class="devis-request">
+    <p>Nom du client : <span class="ms-2">{{ devisRequest.firstName }}</span>,</p>
+    <p>Prénom du client : <span class="ms-2">{{ devisRequest.lastName }}</span>,</p>
+    <p>Email du client : <span class="ms-2">{{ devisRequest.email }}</span>,</p>
+    <p>Télèphone du client : <span class="ms-2">{{ devisRequest.phone }}</span>,</p>
+    <p>Emplacement de batiment : <span class="ms-2">{{ devisRequest.location }}</span>,</p>
+    <p>Type de batiment : <span class="ms-2">{{ devisRequest.building_type }}</span>,</p>
+    <p>Type de toiture : <span class="ms-2">{{ devisRequest.roof_type }}</span>,</p>
+    <p>Consommation : <span class="ms-2">{{ devisRequest.consumption }} Kwh</span>,</p>
+    <p>Surface disponible : <span class="ms-2">{{ devisRequest.available_area }} m²</span></p>
+    <p class="alert alert-danger" *ngIf="stockErrorMessage != ''">{{ stockErrorMessage }} !</p>
+  </div>
+  <div class="devis">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>
+          materielle
+        </th>
+        <th>
+          quantité
+        </th>
+        <th>
+          prix
+        </th>
+        <th>
+          tva
+        </th>
+        <th>
+          total
+        </th>
+      </tr>
+      </thead>
+      <tbody id="body">
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseSolarPanel }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('sp')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('sp')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let sp of SolarPanelList" (click)="selectSolarPanel(sp)"><a
+                class="dropdown-item">{{ sp.model }}</a></li>
+              <li class="d-flex justify-content-center p-2"><span class="p-1 bg-light">Page : {{ pageNo + 1 }}</span>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.solarPanel.quantitySolarPanel"
+                 (keyup)="checkStockValid('sp')">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.solarPanel.priceSolarPanel">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.solarPanel.tvaSolarPanel">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.solarPanel.quantitySolarPanel,devis.solarPanel.priceSolarPanel,devis.solarPanel.tvaSolarPanel,'sp')">
+        </td>
+      </tr>
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseInverter }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('inv')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('inv')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let inv of InverterList" (click)="selectInverter(inv)"><a
+                class="dropdown-item">{{ inv.model }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.inverter.quantityInverter"
+                 (keyup)="checkStockValid('inv')">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.inverter.priceInverter">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.inverter.tvaInverter">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.inverter.quantityInverter,devis.inverter.priceInverter,devis.inverter.tvaInverter,'in')">
+        </td>
+      </tr>
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseSystemFixing }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('sf')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('sf')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let sf of SystemFixingList" (click)="selectSysTemFixing(sf)"><a
+                class="dropdown-item">{{ sf.model }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.systemFixing.quantitySystemFixing">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.systemFixing.priceSystemFixing">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.systemFixing.tvaSystemFixing">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.systemFixing.quantitySystemFixing,devis.systemFixing.priceSystemFixing,devis.systemFixing.tvaSystemFixing,'sf')">
+        </td>
+      </tr>
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseBattery }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('b')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('b')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let b of BatteryList" (click)="selectBattery(b)"><a
+                class="dropdown-item">{{ b.model }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.battery.quantityBattery">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.battery.priceBattery">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.battery.tvaBattery">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.battery.quantityBattery,devis.battery.priceBattery,devis.battery.tvaBattery,'bat')">
+        </td>
+      </tr>
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseMeter }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('m')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('m')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let m of MeterList" (click)="selectMeter(m)"><a
+                class="dropdown-item">{{ m.model }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.meter.quantityMeter">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.meter.priceMeter">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.meter.tvaMeter">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.meter.quantityMeter,devis.meter.priceMeter,devis.meter.tvaMeter,'met')">
+        </td>
+      </tr>
+      <tr>
+        <td class="d-flex align-items-center">
+          <div class="dropdown w-100">
+            <button class="d-flex justify-content-between align-items-center btn w-100" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {{ chooseCable }}
+              <span class="d-flex align-items-center ms-3">
+                <i class="bi bi-arrow-left-circle-fill" (click)="previousPage('c')"></i>
+                <i class="bi bi-arrow-right-circle-fill ms-2" (click)="nextPage('c')"></i>
+              </span>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let c of CableList" (click)="selectCable(c)"><a
+                class="dropdown-item">{{ c.model }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.cable.quantityCable">
+        </td>
+        <td>
+          <input type="number" class="form-control" [(ngModel)]="devis.cable.priceCable">
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="devis.cable.tvaCable">
+            <option>Tva%</option>
+            <option *ngFor="let t of Tva" [value]="t">{{ t }}%</option>
+          </select>
+        </td>
+        <td>
+          <input class="form-control" type="number"
+                 [ngModel]="calculateTotal(devis.cable.quantityCable,devis.cable.priceCable,devis.cable.tvaCable,'cable')">
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="4" class="text-end">
+          total
+        </th>
+        <td>
+          <input class="form-control" type="number" [ngModel]="calculateTotalDevis()">
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary" (click)="saveDevis()">enregistrer <i class="bi-floppy ms-2"></i></button>
+  </div>
+</div>

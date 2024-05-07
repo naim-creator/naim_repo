@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.cdnfonts.com/css/spline-sans');
+@import "~node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
+@import 'dhtmlx-scheduler/codebase/sources/dhtmlxscheduler.css';
+
+* {
+  font-family: 'Spline Sans', sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

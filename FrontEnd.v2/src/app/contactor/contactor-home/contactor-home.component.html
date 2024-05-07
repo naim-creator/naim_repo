@@ -1,0 +1,134 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h1>entreprise dashbord</h1>
+      <h4>Voici quelque information de votre entreprise</h4>
+      <div class="d-flex align-items-center">
+        <div class="info construction">
+          <i class="bi bi-hammer"></i>
+          <span class="p-2"> <span>0</span> chantier</span>
+        </div>
+        <div class="info worker ms-3">
+          <i class="bi bi-person-arms-up"></i>
+          <span class="p-2"> <span>{{ totalWorker }}</span> ouvrier</span>
+        </div>
+        <div class="info request ms-3">
+          <i class="bi bi-envelope-fill me-1"></i>
+          <span class="p-2"><span>{{ devisRequestTotal }}</span> demande</span>
+        </div>
+      </div>
+      <div class="company-form" *ngIf="!companyExist">
+        <h5>S'il vous plait saisie les information de votre entreprise</h5>
+        <div class="col">
+          <label class="form-label">Nom d'entreprise :</label>
+          <input class="form-control w-75" type="text" [(ngModel)]="company.name">
+        </div>
+        <div class="col">
+          <label class="form-label">Adresse d'entreprise :</label>
+          <input class="form-control w-75" type="text" [(ngModel)]="company.address">
+        </div>
+        <div class="col">
+          <label class="form-label">Contact d'entreprise :</label>
+          <input class="form-control w-75" type="text" [(ngModel)]="company.contact">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="saveCompany()">enregistrer</button>
+        </div>
+      </div>
+      <div class="company-info" *ngIf="companyExist">
+        <div class="info">
+          <span>Nom de l'entreprise : {{ company.name }}</span>
+        </div>
+        <div class="info">
+          <span>Adresse de l'entreprise : {{ company.address }}</span>
+        </div>
+        <div class="info">
+          <span>Contact de l'entreprise : {{ company.contact }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <h1>les niveaux des stocks</h1>
+      <div class="d-flex flex-wrap gap-5">
+        <div class="stock panneauSolaire">
+          <circle-progress
+            [percent]="solarPanelStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#70a9ff'"
+            [innerStrokeColor]="'#70a9ff'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>panneau solaire</span>
+        </div>
+        <div class="stock">
+          <circle-progress
+            [percent]="inverterStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#2962c0'"
+            [innerStrokeColor]="'#2962c0'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>onduleur</span>
+        </div>
+        <div class="stock">
+          <circle-progress
+            [percent]="systemFixingStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#43aa8b'"
+            [innerStrokeColor]="'#43aa8b'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>systeme fixation</span>
+        </div>
+        <div class="stock">
+          <circle-progress
+            [percent]="cableStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#208070'"
+            [innerStrokeColor]="'#208070'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>cable</span>
+        </div>
+        <div class="stock">
+          <circle-progress
+            [percent]="meterStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#8e44ad'"
+            [innerStrokeColor]="'#8e44ad'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>compteur</span>
+        </div>
+        <div class="stock">
+          <circle-progress
+            [percent]="batteryStockLevel"
+            [radius]="100"
+            [outerStrokeWidth]="16"
+            [innerStrokeWidth]="8"
+            [outerStrokeColor]="'#d6a5c0'"
+            [innerStrokeColor]="'#d6a5c0'"
+            [animation]="true"
+            [animationDuration]="200"
+          ></circle-progress>
+          <span>batterie</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

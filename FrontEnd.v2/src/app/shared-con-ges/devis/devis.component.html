@@ -1,0 +1,134 @@
+<div class="container-fluid">
+  <div class="d-flex align-items-center mb-3">
+    <input class="form-control w-25" type="text" placeholder="search" [(ngModel)]="sh" (keyup.enter)="search()">
+    <button class="btn btn-primary" (keyup.enter)="search()"><i class="bi bi-search"></i></button>
+    <button class="btn btn-primary ms-3" routerLink="./new">ajouter</button>
+  </div>
+  <table class="table table-bordered">
+    <caption class="caption-top caption">
+      <span class="title">Les devis</span>
+    </caption>
+    <thead>
+    <tr>
+      <th>référence</th>
+      <th>date</th>
+      <th>total panneau solaire</th>
+      <th>total onduleur</th>
+      <th>total system de fixation</th>
+      <th>total batterie</th>
+      <th>total compteur</th>
+      <th>total cable</th>
+      <th>total devis</th>
+      <th>status</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let d of listDevis">
+      <td>{{ d.ref }}</td>
+      <td>{{ d.date }}</td>
+      <td>{{ d.solarPanel.totalSolarPanel }} TND</td>
+      <td>{{ d.inverter.totalInverter }} TND</td>
+      <td>{{ d.systemFixing.totalSystemFixing }} TND</td>
+      <td>{{ d.battery.totalBattery }} TND</td>
+      <td>{{ d.meter.totalMeter }} TND</td>
+      <td>{{ d.cable.totalCable }} TND</td>
+      <td>{{ d.total }} TND</td>
+      <td>{{ d.status }}</td>
+      <td class="d-flex justify-content-center">
+        <i class="bi bi-printer"></i>
+        <i class="bi bi-pencil-square ms-3" data-bs-toggle="modal" data-bs-target="#updateModal"
+           (click)="selectDevis(d)"></i>
+        <i class="bi bi-trash ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal"
+           (click)="selectDevis(d)"></i>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="w-100 d-flex justify-content-end">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" (click)="previousPage()"><a class="page-link"><i class="bi bi-caret-left"></i></a></li>
+        <li class="page-item ms-2 me-2"><a class="page-link text-center" style="width: 50px;">{{ pageNo + 1 }}</a></li>
+        <li class="page-item" (click)="nextPage()"><a class="page-link"><i class="bi bi-caret-right"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="w-100 h-50 d-flex justify-content-center align-items-center" *ngIf="dataLoading">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+    </div>
+    <span class="ms-2">Chargement...</span>
+  </div>
+</div>
+
+
+<!--&lt;!&ndash;Modal update contactor&ndash;&gt;-->
+<!--<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h1 class="modal-title fs-5" id="updateModalLabel">Modifier</h1>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <div class="row">-->
+<!--          <div class="col">-->
+<!--            <label class="form-label">Nom :</label>-->
+<!--            <input class="form-control" type="text" [(ngModel)]="worker.firstName">-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <label class="form-label">Prénom :</label>-->
+<!--            <input class="form-control" type="text" [(ngModel)]="worker.lastName">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="row mt-2">-->
+<!--          <div class="col">-->
+<!--            <label class="form-label">Email :</label>-->
+<!--            <input class="form-control" type="email" [(ngModel)]="worker.email">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="row mt-2">-->
+<!--          <div class="col">-->
+<!--            <label class="form-label">Address :</label>-->
+<!--            <input class="form-control" type="text" [(ngModel)]="worker.address">-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <label class="form-label">Télèhone :</label>-->
+<!--            <input class="form-control" type="text" [(ngModel)]="worker.phone">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <p class="status">-->
+<!--          Status de compte :-->
+<!--          <mat-slide-toggle class="ms-3" [(ngModel)]="user.enabled"></mat-slide-toggle>-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div class="d-flex justify-content-end p-3">-->
+<!--        <button type="button" class="btn btn-primary ms-3" (click)="updateWorker()" data-bs-dismiss="modal">-->
+<!--          Enregistrer-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;Modal delete contactor&ndash;&gt;-->
+<!--<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h1 class="modal-title fs-5" id="deleteModalLabel">Supprimer</h1>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        Êtes-vous sûr d'avoir supprimé cet ouvrier ?-->
+<!--      </div>-->
+<!--      <div class="d-flex justify-content-end p-3">-->
+<!--        <button type="button" class="btn btn-danger ms-3" (click)="deleteWorker()" data-bs-dismiss="modal">-->
+<!--          supprimer-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+

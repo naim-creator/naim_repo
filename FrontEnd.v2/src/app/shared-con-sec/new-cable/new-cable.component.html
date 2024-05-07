@@ -1,0 +1,61 @@
+<div class="container">
+  <h1>ajouter un panneau solaire</h1>
+  <div class="d-flex align-items-center w-100 gap-5">
+    <div class="image">
+      <img [src]=imageLink>
+      <input type="file" class="form-control" (change)="handleFileInput($event)">
+    </div>
+    <div class="form">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">modele : </label>
+          <input class="form-control" type="text" [(ngModel)]="cable.model">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Voltage nominal :</label>
+          <input class="form-control" [(ngModel)]="cable.nominal_voltage">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Résistance :</label>
+          <input class="form-control" [(ngModel)]="cable.resistance">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3">
+          <label class="form-label">Section transversal :</label>
+          <input class="form-control" [(ngModel)]="cable.section_transversal">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Isolation :</label>
+          <input class="form-control" [(ngModel)]="cable.isolation">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Matière :</label>
+          <input class="form-control" [(ngModel)]="cable.material">
+        </div>
+        <div class="col-3">
+          <label class="form-label">Longueur :</label>
+          <input class="form-control" [(ngModel)]="cable.length">
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <label class="form-label"> Diamètre :</label>
+          <input class="form-control" type="number" placeholder="mm" [(ngModel)]="cable.diameter">
+        </div>
+        <div class="col-3">
+          <label class="form-label">prix :</label>
+          <input class="form-control" type="number" [(ngModel)]="cable.price">
+        </div>
+        <div class="col-2">
+          <label class="form-label">quantité: </label>
+          <input class="form-control" type="number" [(ngModel)]="cable.quantity">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="saveCable()">enregistrer <i class="bi bi-floppy ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

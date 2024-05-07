@@ -1,0 +1,93 @@
+.container-fluid {
+  padding-top: 100px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+h1, h4 {
+  color: #3b7ddd;
+  text-transform: capitalize;
+}
+
+h4 {
+  margin-bottom: 25px;
+}
+
+.construction {
+  background-color: greenyellow;
+  color: white;
+}
+
+.worker {
+  background-color: #3b7ddd;
+  color: white;
+}
+
+.request {
+  background-color: #2222ea;
+  color: white;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  padding: 16px 8px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.info i {
+  font-size: 1.8rem;
+}
+
+.info span {
+  font-size: 1.8rem;
+}
+
+.stock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock span {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.company-form {
+  margin-top: 25px;
+  font-size: 18px;
+}
+
+.company-form h5 {
+  color: red;
+}
+
+.company-form .col {
+  margin-top: 25px;
+}
+
+.form-control {
+  border-radius: 3px;
+  box-shadow: none;
+  background-image: linear-gradient(rgba(59, 125, 221, 0.07), #ffffff);
+}
+
+.form-label {
+  font-size: 16px;
+}
+
+.btn-primary {
+  border-radius: 3px;
+}
+
+.company-info {
+  margin-top: 50px;
+}
+
+.company-info span {
+  font-size: 16px !important;
+}
