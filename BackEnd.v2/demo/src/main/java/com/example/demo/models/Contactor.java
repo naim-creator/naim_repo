@@ -29,8 +29,10 @@ public class Contactor {
     private String email;
     private String phone;
     private String address;
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToOne(mappedBy = "contactor")
     private Company company;
+    @OneToOne
+    private Licence licence;
 }

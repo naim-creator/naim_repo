@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+  import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -9,6 +9,8 @@ import { NewContactorComponent } from './new-contactor/new-contactor.component';
 import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
 import {FormsModule} from "@angular/forms";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CompanyListComponent } from './company-list/company-list.component';
+
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ListContactorComponent,
     ListContactRequestComponent,
     NewContactorComponent,
-    AdminLandingPageComponent
+    AdminLandingPageComponent,
+    CompanyListComponent,
   ],
   imports: [
     CommonModule,

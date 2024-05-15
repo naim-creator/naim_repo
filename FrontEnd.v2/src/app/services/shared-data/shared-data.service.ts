@@ -12,15 +12,27 @@ export class SharedDataService {
   }
 
   contactor: Contactor = {
-    id: "", firstName: "", lastName: "", email: "", phone: "", address: "", company: null
+    id: "", firstName: "", lastName: "", email: "", phone: "", address: "", licenceDto:{
+      id: "", expiredAt: "", startedAt: "", status: ""
+    }
   }
 
   worker: Worker = {
-    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "", company: {id: ""}
+    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }
   }
 
   devisRequest: DevisRequest = {
     firstName: "", lastName: "", email: "", phone: "", building_type: "", location: "", post_code: "",
-    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, company: {id: ""}, status: "en attente"
+    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, status: "en attente"
   }
 }

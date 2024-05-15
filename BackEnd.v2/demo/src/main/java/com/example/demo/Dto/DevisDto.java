@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,18 +21,17 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DevisDto {
 
-    private UUID id;
-    private Date date;
+    private UUID idDevis;
+    private LocalDate date;
     private String ref;
-    private String status;
+    private String about;
     private Float total;
-    private Construction construction;
-    private Company company;
     private MaterielSolarPanel solarPanel;
     private MaterielInverter inverter;
     private MaterielSystemFixing systemFixing;
     private MaterielCable cable;
     private MaterielBattery battery;
     private MaterielMeter meter;
-    private DevisRequest devisRequest;
+    private DevisRequestDto devisRequestDto;
+    private CompanyDto companyDto;
 }

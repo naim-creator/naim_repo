@@ -4,6 +4,9 @@ import {AdminLandingPageComponent} from "./admin-landing-page/admin-landing-page
 import {ListContactRequestComponent} from "./list-contact-request/list-contact-request.component";
 import {ListContactorComponent} from "./list-contactor/list-contactor.component";
 import {NewContactorComponent} from "./new-contactor/new-contactor.component";
+import {CompanyListComponent} from "./company-list/company-list.component";
+
+
 
 const routes: Routes = [
   {
@@ -11,6 +14,7 @@ const routes: Routes = [
       {path: "request-app", component: ListContactRequestComponent},
       {path: "contactor", component: ListContactorComponent},
       {path: "contactor/new", component: NewContactorComponent},
+      {path:"company",component:CompanyListComponent},
       {path: "", redirectTo: "request-app", pathMatch: "full"}
     ]
   }

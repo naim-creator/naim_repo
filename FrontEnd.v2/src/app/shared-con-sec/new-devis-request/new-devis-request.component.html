@@ -6,25 +6,31 @@
       <div class="row">
         <div class="col-3">
           <label class="form-label">Nom :</label>
-          <input class="form-control" type="text" [(ngModel)]="devisRequest.firstName">
+          <input class="form-control" type="text" [ngClass]="{'border-danger': !validFirstName}"
+                 [(ngModel)]="devisRequest.firstName && customer.lastName">
+          <span class="text-danger" *ngIf="!validFirstName">Nom est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">Prénom :</label>
-          <input class="form-control" type="text" [(ngModel)]="devisRequest.lastName">
+          <input class="form-control" type="text" [ngClass]="{'border-danger': !validLastName}"
+                 [(ngModel)]="devisRequest.lastName && customer.firstName">
+          <span class="text-danger" *ngIf="!validLastName">Prénom est obligatoire</span>
         </div>
         <div class="col-4">
           <label class="form-label">email :</label>
-          <input class="form-control" type="email" placeholder="@exemple.com" [(ngModel)]="devisRequest.email">
+          <input class="form-control" type="email" placeholder="@exemple.com" [ngClass]="{'border-danger': !validEmail}"
+                 [(ngModel)]="devisRequest.email && customer.email">
+          <span class="text-danger" *ngIf="!validEmail">Email n'est pas bien formé</span>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-2">
           <label class="form-label">téléphone :</label>
-          <input class="form-control" type="text" placeholder="+216" [(ngModel)]="devisRequest.phone">
+          <input class="form-control" type="text" placeholder="+216" [(ngModel)]="devisRequest.phone && customer.phone">
         </div>
         <div class="col-2">
           <label class="form-label">code postal :</label>
-          <input class="form-control" type="text" [(ngModel)]="devisRequest.post_code">
+          <input class="form-control" type="text" [(ngModel)]="devisRequest.post_code && customer.address">
         </div>
       </div>
     </div>
@@ -37,17 +43,19 @@
         </div>
         <div class="col-3">
           <label class="form-label">type de battiment :</label>
-          <select class="form-control" (change)="selectBuilding($event)">
+          <select class="form-control" [ngClass]="{'border-danger': !validBuilding}" (change)="selectBuilding($event)">
             <option>choisir un type de battiment</option>
             <option *ngFor="let b of buildings" [value]="b">{{ b }}</option>
           </select>
+          <span class="text-danger" *ngIf="!validBuilding">type de batiment est obligatoire</span>
         </div>
         <div class="col-4">
           <label class="form-label">type de toiture :</label>
-          <select class="form-control" (change)="selectRoof($event)">
+          <select class="form-control" [ngClass]="{'border-danger': !validRoof}" (change)="selectRoof($event)">
             <option>choisir un type de toiture</option>
             <option *ngFor="let rt of roofs" [value]="rt">{{ rt }}</option>
           </select>
+          <span class="text-danger" *ngIf="!validRoof">type de toiture est obligatoire</span>
         </div>
       </div>
       <div class="row mt-3">
@@ -65,7 +73,9 @@
         </div>
         <div class="col-2">
           <label class="form-label">surface disponible :</label>
-          <input class="form-control" type="text" placeholder="m²" [(ngModel)]="devisRequest.available_area">
+          <input class="form-control" type="text" placeholder="m²" [ngClass]="{'border-danger' : !validSurface}"
+                 [(ngModel)]="devisRequest.available_area">
+          <span class="text-danger" *ngIf="!validSurface">surface disponible est obligatoire</span>
         </div>
       </div>
     </div>

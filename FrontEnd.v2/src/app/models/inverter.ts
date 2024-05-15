@@ -1,8 +1,10 @@
 /* tslint:disable */
 
 /* eslint-disable */
+import {Company} from "./Company";
+
 export interface Inverter {
-  company: { id: string };
+  companyDto: Company;
   frequency: string;
   id?: any;
   image: string;

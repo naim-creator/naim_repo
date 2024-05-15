@@ -23,6 +23,14 @@ public class CompanyController {
         return this.companyService.getAllCompanies(page, size);
     }
 
+    @GetMapping("get/filter")
+    public CompanyResponse getAllCompaniesFiltered(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+                                                   @RequestParam(value = "pageSize", defaultValue = "0", required = false) int size,
+                                                   @RequestParam(value="filter",defaultValue="",required=false)String filter) {
+        return this.companyService.getAllCompaniesFiltered(page, size,filter);
+    }
+
+
     @GetMapping("get/{id}")
     public CompanyDto getCompanyById(@PathVariable UUID id) throws Exception {
         return this.companyService.getCompanyById(id);

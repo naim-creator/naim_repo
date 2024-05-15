@@ -2,12 +2,9 @@ package com.example.demo.services;
 
 
 import com.example.demo.Dto.SupplierDto;
-import com.example.demo.Dto.WorkerDto;
 import com.example.demo.ResponsePageable.SupplierResponse;
-import com.example.demo.ResponsePageable.WorkerResponse;
 import com.example.demo.convert.SupplierDtoConverter;
 import com.example.demo.models.Supplier;
-import com.example.demo.models.Worker;
 import com.example.demo.repositorys.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -46,7 +43,7 @@ public class SupplierService {
 
     public SupplierResponse getAllSupplierByCompanyFiltered(UUID id, int page, int size, String filter) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Supplier> suppliers = this.supplierRepository.findBySupplierCompanyIdFiltered(id,filter, pageable);
+        Page<Supplier> suppliers = this.supplierRepository.findBySupplierCompanyIdFiltered(id, filter, pageable);
         List<SupplierDto> supplierDtos = suppliers.stream()
                 .map(supplierDtoConverter::SupplierToDto)
                 .collect(Collectors.toList());

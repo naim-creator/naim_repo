@@ -32,6 +32,12 @@ export class DevisService {
     return this.http.get(this.link + "/devis/get/filter/" + id + "?" + params.toString(), {headers: head_obj});
   }
 
+  public printDevis(devis: Devis):Observable<any> {
+    let token: string = sessionStorage.getItem('token') as string;
+    let head_obj: HttpHeaders = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post(this.link + "/devis/print", devis, {headers: head_obj ,responseType : 'blob'});
+  }
+
   public addDevis(devis: Devis): Observable<any> {
     let token: string = sessionStorage.getItem('token') as string;
     let head_obj: HttpHeaders = new HttpHeaders().set('Authorization', 'Bearer ' + token);

@@ -1,7 +1,6 @@
 package com.example.demo.Dto;
 
 
-import com.example.demo.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ public class ActivityDto {
     private Date start_date;
     private Date end_date;
     private String text;
-    private Construction construction;
-    private Company company;
-    private List<Worker> workers;
+    private ConstructionDto constructionDto;
+    private CompanyDto companyDto;
+    private List<WorkerDto> workerDtoList;
 }

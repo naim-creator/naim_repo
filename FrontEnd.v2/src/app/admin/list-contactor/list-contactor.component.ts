@@ -1,36 +1,44 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ContactorService} from "../../services/contactor/contactor.service";
-import {AuthService} from "../../services/authentication/auth.service";
 import {Contactor} from "../../models/Contactor";
+import {LicenceService} from "../../services/licence/licence.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-list-contactor',
   templateUrl: './list-contactor.component.html',
   styleUrls: ['./list-contactor.component.css']
 })
-export class ListContactorComponent {
+export class ListContactorComponent implements OnInit {
   constructor(private service: ContactorService,
-              private authService: AuthService) {
+              private userService: UserService,
+              private licenceService: LicenceService) {
   }
 
-  filteredData: boolean = false
+  updateRequestMessage: any = "";
+  updateAccountMessage: any = "";
+  updateContactorMessage: any = "";
+  updateLicenceMessage: any = "";
+  filteredData: boolean = false;
   accountActive: boolean = false;
-  goodRequest: boolean = true;
-  errorMessage: string = ""
   contactorList: Array<Contactor> = []
-  dataExist: boolean = false
+  dataExist: boolean = true;
   totalPages: number = 0
   pageNo: number = 0
+  totalElements: number = 0
   sh: string = ""
+  licenceUpdate: boolean = false;
   dataLoading: boolean = true;
+  duration: number = 0;
   contactor: Contactor = {
-    id: "", firstName: "", lastName: "", email: "", phone: "", address: ""
+    id: "", firstName: "", lastName: "", email: "", phone: "", address: "",
+    licenceDto: {id: "", expiredAt: "", startedAt: "", status: ""}
   }
 
   public selectContactor(contactor: Contactor): void {
+    console.log(contactor)
     this.contactor = contactor;
-    let email: any = contactor.email;
-    this.getAccountByEmail(email);
+    this.getAccountByEmail(contactor.email);
   }
 
   public nextPage(): void {
@@ -74,28 +82,24 @@ export class ListContactorComponent {
   }
 
   public activateAccount(): void {
-    this.authService.activateAccount(this.contactor).subscribe({
+    this.userService.activateAccount(this.contactor.email).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = err.error.text;
-          this.goodRequest = true;
+          this.updateAccountMessage = err.error.text;
         } else {
-          this.errorMessage = "Un problème est servenu";
-          this.goodRequest = false;
+          this.updateAccountMessage = "Un problème est servenu";
         }
       }
     })
   }
 
   public disableAccount(): void {
-    this.authService.disableAccount(this.contactor).subscribe({
+    this.userService.disableAccount(this.contactor.email).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = err.error.text;
-          this.goodRequest = true;
+          this.updateAccountMessage = err.error.text;
         } else {
-          this.errorMessage = "Un problème est servenu";
-          this.goodRequest = false;
+          this.updateAccountMessage = "Un problème est servenu";
         }
       }
     })
@@ -105,38 +109,45 @@ export class ListContactorComponent {
     this.service.updateContactor(this.contactor).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = "Donnée a été mise à jour";
-          this.goodRequest = true;
-          if (this.accountActive) {
-            this.activateAccount();
-          } else {
-            this.disableAccount();
-          }
+          this.updateContactorMessage = err.error.text;
         } else {
-          this.errorMessage = "Un problème est servenu";
-          this.goodRequest = false;
+          this.updateContactorMessage = "Un problème est servenu";
         }
       }
     })
+    if (this.licenceUpdate) {
+      this.updateLicence();
+    }
+  }
+
+  public updateAccount(): void {
+    switch (this.accountActive) {
+      case true: {
+        this.activateAccount();
+        break;
+      }
+      case false: {
+        this.disableAccount();
+        break;
+      }
+    }
   }
 
   public deleteContactor(): void {
     this.service.deleteContactor(this.contactor).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = "Donnée a été supprimer";
-          this.goodRequest = true;
-          this.getContactorList(this.pageNo)
+          this.updateContactorMessage = err.error.text;
+          this.getContactorList(this.pageNo);
         } else {
-          this.errorMessage = "Un problème est servenu";
-          this.goodRequest = false;
+          this.updateContactorMessage = "error est servenu";
         }
       }
     })
   }
 
   public getAccountByEmail(email: string): void {
-    this.authService.getAccountByEmail(email).subscribe({
+    this.userService.getAccount(email).subscribe({
       next: (res) => {
         this.accountActive = res.enabled
       }
@@ -150,8 +161,11 @@ export class ListContactorComponent {
       next: (res) => {
         this.contactorList = res.content
         this.totalPages = res.totalPages
-        this.dataExist = res.content.length != 0 && res.totalPages > 1;
+        this.totalElements = res.totalElements;
         this.dataLoading = false;
+        if (res.totalElements === 0) {
+          this.dataExist = false;
+        }
       }
     })
   }
@@ -163,12 +177,42 @@ export class ListContactorComponent {
         this.contactorList = res.content
         this.totalPages = res.totalPages
         this.dataLoading = false;
-        this.filteredData = res.content.length != 0 && res.totalPages > 1;
+        this.dataExist = true;
+        this.filteredData = true;
+        if (res.totalElements === 0) {
+          this.dataExist = false;
+        }
+      }
+    })
+  }
+
+  public selectLicence(event: any): void {
+    this.duration = Number(event.target.value);
+    this.licenceUpdate = true;
+  }
+
+  public updateLicence(): void {
+    this.licenceService.updateLicence(this.duration, this.contactor.licenceDto).subscribe({
+      error: (err) => {
+        if (err.status === 200) {
+          this.updateLicenceMessage = err.error.text;
+          this.getContactorList(this.pageNo)
+        } else {
+          this.updateLicenceMessage = "error est servenu";
+        }
       }
     })
   }
 
   ngOnInit() {
+    this.updateRequestMessage = sessionStorage.getItem('message') as string;
+    this.updateContactorMessage = sessionStorage.getItem('contactorMessage') as string;
+    setTimeout(() => {
+      this.updateRequestMessage = null;
+      this.updateContactorMessage = null;
+      sessionStorage.removeItem('message');
+      sessionStorage.removeItem('contactorMessage');
+    }, 3000)
     this.getContactorList(this.pageNo)
   }
 }

@@ -6,13 +6,17 @@ import { CalenderComponent } from './calender/calender.component';
 import { DevisComponent } from './devis/devis.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {RouterLink} from "@angular/router";
+import { ConstructionComponent } from './construction/construction.component';
+import { NewConstructionComponent } from './new-construction/new-construction.component';
 
 
 @NgModule({
   declarations: [
     NewDevisComponent,
     CalenderComponent,
-    DevisComponent
+    DevisComponent,
+    ConstructionComponent,
+    NewConstructionComponent
   ],
     imports: [
         CommonModule,

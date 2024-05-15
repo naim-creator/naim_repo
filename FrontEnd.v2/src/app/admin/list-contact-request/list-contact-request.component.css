@@ -2,7 +2,6 @@
   padding-top: 100px;
   padding-right: 50px;
   padding-left: 50px;
-  height: 100%;
 }
 
 .title {
@@ -127,4 +126,13 @@ i:hover {
   color: white;
 }
 
+.bg-primary{
+  background-color: #3b7ddd !important;
+  color: white !important;
+}
+
+.waiting{
+  background-color: orange;
+  color: white;
+}
 

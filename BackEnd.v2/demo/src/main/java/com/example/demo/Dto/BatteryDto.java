@@ -29,5 +29,5 @@ public class BatteryDto {
     private Float price;
     private Integer quantity;
     private String image;
-    private Company company;
+    private CompanyDto companyDto;
 }

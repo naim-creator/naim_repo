@@ -1,17 +1,73 @@
-#logo{
+#logo {
   width: 180px;
 }
 
-.navbar-nav .nav-item{
+.navbar {
+  background-color: rgba(10, 42, 89, 0.04);
+}
+
+.navbar-nav .nav-item {
   margin-left: 50px;
   text-transform: capitalize;
 }
 
-.nav-item{
+.nav-link {
+  color: #0a2a59 !important;
+  font-size: 16px;
+}
+
+.nav-item {
   cursor: pointer;
 }
 
-.active{
+.active {
   font-weight: 600;
   color: #3b7ddd !important;
+}
+
+.btn {
+  border-radius: 3px;
+}
+
+.bi-person-circle {
+  font-size: 22px;
+}
+
+.btn-light {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.btn-logout {
+  background-color: red;
+  color: white;
+  border-radius: 3px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 1399px) {
+  .logo-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+  }
+}
+
+
+input[type = 'file'] {
+  width: 148px;
+}
+
+p span {
+  color: #2222ea;
+}
+
+.bi-gear {
+  font-size: 18px;
+  cursor: pointer;
 }

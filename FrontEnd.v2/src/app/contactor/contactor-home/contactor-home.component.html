@@ -1,18 +1,16 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-6">
-      <h1>entreprise dashbord</h1>
-      <h4>Voici quelque information de votre entreprise</h4>
-      <div class="d-flex align-items-center">
-        <div class="info construction">
+  <div class="d-flex flex-wrap justify-content-between">
+    <div class="about">
+      <div class="d-flex align-items-center flex-wrap">
+        <div class="info construction m-2">
           <i class="bi bi-hammer"></i>
           <span class="p-2"> <span>0</span> chantier</span>
         </div>
-        <div class="info worker ms-3">
+        <div class="info worker m-2">
           <i class="bi bi-person-arms-up"></i>
           <span class="p-2"> <span>{{ totalWorker }}</span> ouvrier</span>
         </div>
-        <div class="info request ms-3">
+        <div class="info request m-2">
           <i class="bi bi-envelope-fill me-1"></i>
           <span class="p-2"><span>{{ devisRequestTotal }}</span> demande</span>
         </div>
@@ -21,7 +19,7 @@
         <h5>S'il vous plait saisie les information de votre entreprise</h5>
         <div class="col">
           <label class="form-label">Nom d'entreprise :</label>
-          <input class="form-control w-75" type="text" [(ngModel)]="company.name">
+          <input class="form-control w-75" type="text" [(ngModel)]="company.companyName">
         </div>
         <div class="col">
           <label class="form-label">Adresse d'entreprise :</label>
@@ -37,7 +35,7 @@
       </div>
       <div class="company-info" *ngIf="companyExist">
         <div class="info">
-          <span>Nom de l'entreprise : {{ company.name }}</span>
+          <span>Nom de l'entreprise : {{ company.companyName }}</span>
         </div>
         <div class="info">
           <span>Adresse de l'entreprise : {{ company.address }}</span>
@@ -45,11 +43,13 @@
         <div class="info">
           <span>Contact de l'entreprise : {{ company.contact }}</span>
         </div>
+        <div class="info">
+          <span>Date d'expiration de licence : <span style="color: #cb0ecb">{{ contactor.licenceDto.expiredAt }}</span></span>
+        </div>
       </div>
     </div>
-    <div class="col-6">
-      <h1>les niveaux des stocks</h1>
-      <div class="d-flex flex-wrap gap-5">
+    <div class="stock-container">
+      <div class="d-flex justify-content-center flex-wrap gap-5">
         <div class="stock panneauSolaire">
           <circle-progress
             [percent]="solarPanelStockLevel"

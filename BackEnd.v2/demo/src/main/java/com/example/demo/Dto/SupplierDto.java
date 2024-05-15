@@ -15,10 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class SupplierDto {
     private UUID id;
-    private String firstName;
-    private String lastName;
-    private String SupplierCompanyName;
+    private String Name;
     private String phone;
     private String email;
-    private Company company;
+    private CompanyDto companyDto;
 }

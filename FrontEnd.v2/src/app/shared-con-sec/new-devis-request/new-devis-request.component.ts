@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {DevisRequestService} from "../../services/devis-request/devis-request.service";
 import {DevisRequest} from "../../models/DevisRequest";
 import {Router} from "@angular/router";
-import {SharedDataService} from "../../services/shared-data/shared-data.service";
-import {Contactor} from "../../models/Contactor";
-import {Worker} from "../../models/Worker";
-import {SolarPanel} from "../../models/solar-panel";
-import {SolarPanelService} from "../../services/solar-panel/solar-panel.service";
+import {CustomerService} from "../../services/customer/customer.service";
+import {Customer} from "../../models/Customer";
 
 @Component({
   selector: 'app-new-devis-request',
@@ -16,14 +13,29 @@ import {SolarPanelService} from "../../services/solar-panel/solar-panel.service"
 export class NewDevisRequestComponent implements OnInit {
 
   constructor(private devisRequestService: DevisRequestService,
-              private route: Router) {
+              private route: Router,
+              private customerService:CustomerService) {
   }
 
   devisRequest: DevisRequest = {
     firstName: "", lastName: "", email: "", phone: "", building_type: "", location: "", post_code: "",
-    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, company: {id: ""}, status: "en attente"
+    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, status: "en attente"
+  }
+  customer:Customer={
+    id:"",address:"",email:"",companyDto:{},phone:"",firstName:"",lastName:""
   }
 
+  validFirstName: boolean = true;
+  validLastName: boolean = true;
+  validEmail: boolean = true;
+  validRoof: boolean = true;
+  validBuilding: boolean = true;
+  validSurface: boolean = true;
   roofs: string[] = ["Toiture cintrée en berceau",
     "Toiture à 3 pans", "Toiture à 4 pans", "Toiture cintrée à simple courbure concave",
     "Toiture à demi-croupe normande", "Toiture à demi-croupe, croupe champenoise",
@@ -36,14 +48,28 @@ export class NewDevisRequestComponent implements OnInit {
   companyId: string = "";
 
   public saveDevisRequest(): void {
-    this.devisRequest.company = {id: this.companyId}
-    this.devisRequestService.addDevisRequest(this.devisRequest).subscribe({
-      error: (err) => {
-        if (err.status === 200) {
-          this.route.navigate(['contactor/request-devis']).then(r => console.log(true));
+    this.checkLastNameValid()
+    this.checkFirstNameValid()
+    this.checkEmailValid()
+    this.checkValidRoof()
+    this.checkValidBuilding()
+    this.checkValidSurface()
+    if (this.validFirstName && this.validLastName && this.validEmail && this.validBuilding && this.validRoof && this.validSurface) {
+      this.devisRequestService.addDevisRequest(this.devisRequest).subscribe({
+        error: (err) => {
+          if (err.status === 200) {
+            this.route.navigate(['contactor/request-devis']).then(r => sessionStorage.setItem('message', err.error.text));
+          }
         }
-      }
-    })
+      })
+      this.customerService.saveCustomer(this.customer).subscribe({
+        error:(err)=>{
+          if (err.status === 200) {
+            this.route.navigate(['contactor/request-devis']).then(r => sessionStorage.setItem('message', err.error.text));
+          }
+        }
+      })
+    }
   }
 
   public selectRoof(event: any) {
@@ -58,8 +84,32 @@ export class NewDevisRequestComponent implements OnInit {
     this.devisRequest.electricity_access = event.target.value
   }
 
+  public checkFirstNameValid(): void {
+    this.validFirstName = this.devisRequest.firstName !== "";
+  }
+
+  public checkLastNameValid(): void {
+    this.validLastName = this.devisRequest.lastName !== "";
+  }
+
+  public checkEmailValid(): void {
+    this.validEmail = this.devisRequest.email.slice(-10) == "@gmail.com";
+  }
+
+  public checkValidRoof(): void {
+    this.validRoof = this.devisRequest.roof_type !== "";
+  }
+
+  public checkValidBuilding(): void {
+    this.validBuilding = this.devisRequest.building_type !== "";
+  }
+
+  public checkValidSurface(): void {
+    this.validSurface = this.devisRequest.available_area !== 0;
+  }
+
 
   ngOnInit() {
-    this.companyId = sessionStorage.getItem('company') as string;
+    this.devisRequest.companyDto = JSON.parse(sessionStorage.getItem('company') as any);
   }
 }

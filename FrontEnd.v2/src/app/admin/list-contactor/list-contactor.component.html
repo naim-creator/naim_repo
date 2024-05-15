@@ -1,54 +1,71 @@
 <div class="container-fluid">
-  <div class="d-flex align-items-center mb-3">
+  <div class="d-flex align-items-center mb-3" *ngIf="dataExist || filteredData">
     <input class="form-control w-25" type="text" placeholder="search" [(ngModel)]="sh" (keyup.enter)="search()">
     <button class="btn btn-primary"><i class="bi bi-search"></i></button>
-    <div class="alert alert-success" *ngIf="errorMessage!='' && goodRequest">
-      <i class="bi bi-info-circle me-2"></i>{{ errorMessage }}
+    <div class="alert alert-success ms-3 mb-0" *ngIf="updateContactorMessage!= null">
+      <i class="bi bi-info-circle me-2"></i> {{ updateContactorMessage }}
     </div>
-    <div class="alert alert-danger" *ngIf="errorMessage!='' && !goodRequest">
-      <i class="bi bi-info-circle me-2"></i>{{ errorMessage }}
+    <div class="alert alert-success ms-3 mb-0" *ngIf="updateLicenceMessage!= ''">
+      <i class="bi bi-info-circle me-2"></i> {{ updateLicenceMessage }}
+    </div>
+    <div class="alert alert-success ms-3 mb-0" *ngIf="updateRequestMessage!= null">
+      <i class="bi bi-info-circle me-2"></i> {{ updateRequestMessage }}
     </div>
   </div>
-  <table class="table table-bordered">
-    <caption class="caption-top caption">
-      <span class="title">Les entrepreneur</span>
-    </caption>
-    <thead>
-    <tr>
-      <th>nom</th>
-      <th>prénom</th>
-      <th>email</th>
-      <th>telephone</th>
-      <th>address</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let contactor of contactorList">
-      <td>{{ contactor.firstName }}</td>
-      <td>{{ contactor.lastName }}</td>
-      <td>{{ contactor.email }}</td>
-      <td>{{ contactor.phone }}</td>
-      <td>{{ contactor.address }}</td>
-      <td class="d-flex justify-content-center">
-        <i class="bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#updateModal"
-           (click)="selectContactor(contactor)"></i>
-        <i class="bi bi-trash ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal"
-           (click)="selectContactor(contactor)"></i>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table class="table table-bordered table-hover">
+      <caption class="caption-top caption">
+        <span class="title">Les entrepreneurs</span>
+      </caption>
+      <thead>
+      <tr>
+        <th>nom</th>
+        <th>prénom</th>
+        <th>email</th>
+        <th>telephone</th>
+        <th>address</th>
+        <th>Licence</th>
+        <th>Date d'expiration</th>
+        <th>action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contactor of contactorList">
+        <td>{{ contactor.firstName }}</td>
+        <td>{{ contactor.lastName }}</td>
+        <td>{{ contactor.email }}</td>
+        <td>{{ contactor.phone }}</td>
+        <td>{{ contactor.address }}</td>
+        <td
+          [ngClass]="{'bg-green' : contactor.licenceDto.status === 'activer', 'bg-red': contactor.licenceDto.status === 'expirer'}">{{ contactor.licenceDto.status }}
+        </td>
+        <td>{{ contactor.licenceDto.expiredAt }}</td>
+        <td class="d-flex justify-content-center">
+          <i class="bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#updateModal"
+             (click)="selectContactor(contactor)"></i>
+          <i class="bi bi-trash ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal"
+             (click)="selectContactor(contactor)"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-  <div class="w-100 d-flex justify-content-end">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item" (click)="previousPage()"><a class="page-link"><i class="bi bi-caret-left"></i></a></li>
-        <li class="page-item ms-2 me-2"><a class="page-link text-center" style="width: 50px;">{{ pageNo + 1 }}</a></li>
-        <li class="page-item" (click)="nextPage()"><a class="page-link"><i class="bi bi-caret-right"></i></a></li>
-      </ul>
-    </nav>
-  </div>
+<div class="d-flex me-5 position-fixed bottom-0 end-0" *ngIf="dataExist">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link ng-entrepreneur">{{ totalElements }} entrepreneurs</a></li>
+      <li class="page-item"><a class="page-link ng-entrepreneur me-1">{{ totalPages }} pages</a></li>
+      <li class="page-item" (click)="previousPage()"><a class="page-link"><i class="bi bi-caret-left"></i></a></li>
+      <li class="page-item ms-2 me-2"><a class="page-link text-center" style="width: 50px;">{{ pageNo + 1 }}</a></li>
+      <li class="page-item" (click)="nextPage()"><a class="page-link"><i class="bi bi-caret-right"></i></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="d-flex justify-content-center align-items-center position-absolute top-25 w-100" *ngIf="!dataExist">
+  <img src="assets/OIP.jpeg" class="opacity-25">
 </div>
 
 <div class="w-100 h-75 d-flex justify-content-center align-items-center position-absolute top-0" *ngIf="dataLoading">
@@ -66,6 +83,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <div class="alert alert-success mb-2" *ngIf="updateAccountMessage!= ''">
+          <i class="bi bi-info-circle me-2"></i> {{ updateAccountMessage }}
+        </div>
         <div class="row">
           <div class="col">
             <label class="form-label">Nom :</label>
@@ -94,11 +114,23 @@
         </div>
         <p class="status">
           Status de compte :
-          <mat-slide-toggle class="ms-3" [(ngModel)]="accountActive"></mat-slide-toggle>
+          <mat-slide-toggle class="ms-3" (change)="updateAccount()" [(ngModel)]="accountActive"></mat-slide-toggle>
         </p>
+        <div class="row mt-2">
+          <div class="col-5">
+            <label class="form-label">Renouvelle la licence :</label>
+            <select class="form-control" (change)="selectLicence($event)">
+              <option>choisir durée licence</option>
+              <option value="1">1 mois</option>
+              <option value="3">3 mois</option>
+              <option value="6">6 mois</option>
+              <option value="12">12 mois</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="d-flex justify-content-end p-3">
-        <button type="button" class="btn btn-primary ms-3" (click)="updateContactor()" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-primary ms-3" data-bs-dismiss="modal" (click)="updateContactor()">
           Enregistrer
         </button>
       </div>
@@ -125,4 +157,3 @@
     </div>
   </div>
 </div>
-

@@ -1,16 +1,19 @@
 <nav class="navbar navbar-expand-xxl" aria-label="Seventh navbar example">
   <div class="container-fluid">
-    <img src="../../../assets/lg.png" id="logo">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleXxl" aria-controls="navbarsExampleXxl" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="logo-container">
+      <img src="../../../assets/lg.png" id="logo">
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleXxl"
+            aria-controls="navbarsExampleXxl" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarsExampleXxl">
       <ul class="navbar-nav ms-5 me-auto mb-2 mb-xl-0">
         <li class="nav-item">
-          <a class="nav-link"  routerLink="./home" routerLinkActive="active">home</a>
+          <a class="nav-link" routerLink="./home" routerLinkActive="active">home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  routerLink="./request-devis" routerLinkActive="active">demande devis</a>
+          <a class="nav-link" routerLink="./request-devis" routerLinkActive="active">demande devis</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="./devis" routerLinkActive="active">devis</a>
@@ -18,12 +21,18 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Stock</a>
           <ul class="dropdown-menu">
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/panneauS.png" width="30px" alt=""><a class="dropdown-item" routerLink="solar-panel">Panneaux Solaire</a></li>
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/Onduleur.png" width="30px" alt=""><a class="dropdown-item" routerLink="inverter">Onduleur</a></li>
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/sytemF.png" width="30px" alt=""><a class="dropdown-item" routerLink="system-fixing">Systeme de support</a></li>
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/cables.png" width="30px" alt=""><a class="dropdown-item" routerLink="cable">Cables</a></li>
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/battery.png" width="30px" alt=""><a class="dropdown-item" routerLink="battery">Batterie</a></li>
-            <li class="d-flex mb-2 p-2"><img src="../../../assets/compteur.png" width="30px" alt=""><a class="dropdown-item" routerLink="meter">Compteurs</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/panneauS.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="solar-panel">Panneaux Solaire</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/Onduleur.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="inverter">Onduleur</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/sytemF.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="system-fixing">Systeme de support</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/cables.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="cable">Cables</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/battery.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="battery">Batterie</a></li>
+            <li class="d-flex mb-2 p-2"><img src="../../../assets/compteur.png" width="30px" alt=""><a
+              class="dropdown-item" routerLink="meter">Compteurs</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -38,10 +47,43 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="./worker" routerLinkActive="active">ouvrier</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="./customer" routerLinkActive="active">client</a>
+        </li>
       </ul>
       <div>
       </div>
     </div>
-    <button class="btn btn-light" (click)="logOut()"><i class="bi bi-power me-2"></i>déconnexion</button>
+    <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+            aria-controls="offcanvasExample">
+      <i class="bi bi-person-circle"></i>
+    </button>
   </div>
 </nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <i class="bi bi-gear"></i>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+      <img src="assets/noImage.jpg" width="250px" height="250px" style="border-radius: 250px;">
+      <input type="file" class="form-control mt-3">
+    </div>
+    <div class="mt-5">
+      <p>Nom et Prénom : <span>{{ user.firstName }} {{ user.lastName }}</span></p>
+      <p>Email : <span>{{ user.email }}</span></p>
+      <p>Profession : <span>{{ role }}</span></p>
+      <p>Addresse : <span>{{ user.address }}</span></p>
+      <p>Téléphone : <span>{{ user.phone }}</span></p>
+    </div>
+    <div class="mt-5">
+      <p>Date d'expiration de licence : <span>{{ user.licenceDto.expiredAt }}</span></p>
+      <p></p>
+    </div>
+    <div class="d-flex justify-content-end position-absolute end-0 bottom-0 m-2">
+      <span class="btn-logout" (click)="logOut()"><i class="bi bi-power"></i> déconnexion</span>
+    </div>
+  </div>
+</div>

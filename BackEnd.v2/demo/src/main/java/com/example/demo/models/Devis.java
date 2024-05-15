@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,10 +17,10 @@ import java.util.UUID;
 public class Devis {
     @Id
     @GeneratedValue
-    private UUID id;
-    private Date date;
+    private UUID idDevis;
+    private LocalDate date;
     private String ref;
-    private String status;
+    private String about;
     @Embedded
     private MaterielSolarPanel solarPanel;
     @Embedded

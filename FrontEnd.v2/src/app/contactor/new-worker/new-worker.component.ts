@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {Contactor} from "../../models/Contactor";
 import {Worker} from "../../models/Worker";
 import {User} from "../../models/User";
+import {Licence} from "../../models/Licence";
+import {LicenceService} from "../../services/licence/licence.service";
 
 @Component({
   selector: 'app-new-worker',
@@ -14,22 +16,33 @@ import {User} from "../../models/User";
 export class NewWorkerComponent implements OnInit {
   constructor(private workerService: WorkerService,
               private authService: AuthService,
-              private route: Router) {
+              private route: Router,
+              private licenceService: LicenceService) {
   }
 
   errorMessage: string = "";
   imageLink: string = "assets/profile.png";
   companyId: string = "";
+
+
   contactor: Contactor = {
-    email: "", phone: "", firstName: "", lastName: "", address: "", company: {id: ""}
+    email: "", phone: "", firstName: "", lastName: "", address: "",
+    licenceDto: {id: "", expiredAt: "", startedAt: "", status: ""}
   }
 
   worker: Worker = {
-    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "", company: {id: ""}
+    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "",
+    companyDto: {
+      id: "", companyName: "", address: "", contact: "", contactorDto: {
+        id: "", firstName: "", lastName: "", email: "", phone: "", address: "", licenceDto: {
+          id: "", status: "", startedAt: "", expiredAt: ""
+        }
+      }
+    }
   }
 
   user: User = {
-    email: "", password: "", firstName: "", lastName: "", role: ""
+    email: "", password: "", firstName: "", lastName: "", role: "", enabled: true
   }
 
   public affectProfession(event: any): void {
@@ -41,11 +54,14 @@ export class NewWorkerComponent implements OnInit {
     this.user.firstName = this.worker.firstName;
     this.user.lastName = this.worker.lastName;
     this.user.email = this.worker.email;
-    this.worker.company = {id: this.companyId};
+    this.worker.companyDto.id = this.companyId;
     this.workerService.addWorker(this.worker).subscribe({
       error: (err) => {
         if (err.status === 200) {
           this.authService.register(this.user).subscribe({
+            next: (res) => {
+              this.route.navigate(['contactor/worker']).then(r => console.log(res))
+            },
             error: (err) => {
               if (err.status === 200) {
 
@@ -57,11 +73,11 @@ export class NewWorkerComponent implements OnInit {
         } else {
           this.errorMessage = "Un problème est servenu"
         }
-        this.route.navigate(['contactor/worker'])
       }
     })
 
   }
+
 
   public handleFileInput(event: any): void {
     const file = event.target.files[0];

@@ -1,5 +1,8 @@
 <div class="container-fluid">
   <h1>Stock des systèmes de fixation</h1>
+  <div class="alert alert-success" *ngIf="message != ''">
+    {{ message }}
+  </div>
   <div class="d-flex flex-wrap align-items-center w-100">
     <div class="stock-level">
       <div class="d-flex flex-column align-items-center gap-5">

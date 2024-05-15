@@ -1,0 +1,65 @@
+.container {
+  padding-top: 50px;
+}
+
+.construction{
+  padding-top: 75px;
+}
+
+h1 {
+  color: #3b7ddd;
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+h2{
+  margin: 0;
+}
+
+.btn {
+  border-radius: 3px;
+}
+
+.btn-client {
+  border: 1px solid #0a2a59;
+  background-color: transparent;
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-menu{
+  width: 250px;
+  border-radius: 3px;
+  border: 1px solid #0a2a59;
+}
+
+.form{
+  box-shadow: 0 0 3px rgba(59, 125, 221, 0.24);
+  padding: 22px;
+  border-radius: 3px;
+}
+
+.form p{
+  font-size: 16px;
+  margin: 0;
+}
+
+.form p span{
+  color: #2222ea;
+}
+
+.form-control {
+  border-radius: 3px;
+  box-shadow: none;
+  background-image: linear-gradient(rgba(59, 125, 221, 0.07), #ffffff);
+}
+
+.form-label {
+  font-size: 16px;
+}
+
+.btn-primary{
+  background-color: #3b7ddd;
+}

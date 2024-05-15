@@ -55,28 +55,4 @@ export class AuthService {
     sessionStorage.clear();
     this.route.navigate(['login'])
   }
-
-  public activateAccount(contactor: Contactor): Observable<any> {
-    let token = sessionStorage.getItem('token') as string;
-    let head_obj = new HttpHeaders().set("Authorization", "Bearer " + token);
-    return this.http.put(this.link + "/auth/activate-account/contactor", contactor, {headers: head_obj})
-  }
-
-  public disableAccount(contactor: Contactor): Observable<any> {
-    let token = sessionStorage.getItem('token') as string;
-    let head_obj = new HttpHeaders().set("Authorization", "Bearer " + token);
-    return this.http.put(this.link + "/auth/disable-account/contactor", contactor, {headers: head_obj})
-  }
-
-  public getAccountByEmail(email: string): Observable<any> {
-    let token = sessionStorage.getItem('token') as string;
-    let head_obj = new HttpHeaders().set("Authorization", "Bearer " + token);
-    return this.http.get(this.link + "/auth/get/account/" + email, {headers: head_obj})
-  }
-
-  public deleteAccountByEmail(email: string): Observable<any> {
-    let token = sessionStorage.getItem('token') as string;
-    let head_obj = new HttpHeaders().set("Authorization", "Bearer " + token);
-    return this.http.delete(this.link + "/auth/delete/" + email, {headers: head_obj});
-  }
 }

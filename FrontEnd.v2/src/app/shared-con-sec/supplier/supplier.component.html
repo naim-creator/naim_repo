@@ -30,7 +30,7 @@
       <td>{{ s.lastName }}</td>
       <td>{{ s.email }}</td>
       <td>{{ s.phone }}</td>
-      <td>{{ s.SupplierCompanyName }}</td>
+      <td>{{ s.supplierCompanyName }}</td>
       <td class="d-flex justify-content-center">
         <i class="bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#updateModal"
            (click)="selectSupplier(s)"></i>
@@ -50,11 +50,12 @@
       </ul>
     </nav>
   </div>
-  <div class="w-100 h-50 d-flex justify-content-center align-items-center" *ngIf="!dataExist">
-    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-    </div>
-    <span class="ms-2">Chargement...</span>
+</div>
+
+<div class="w-100 h-50 d-flex justify-content-center align-items-center position-absolute top-0 h-75" *ngIf="dataLoading">
+  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
   </div>
+  <span class="ms-2">Chargement...</span>
 </div>
 
 
@@ -90,36 +91,37 @@
         <div class="row mt-3">
           <div class="col-6 ">
             <label class="form-label">nom d'entreprise</label>
-            <input class="form-control" type="text" [(ngModel)]="supplier.SupplierCompanyName">
+            <input class="form-control" type="text" [(ngModel)]="supplier.supplierCompanyName">
           </div>
         </div>
 
-      <div class="d-flex justify-content-end p-3">
-        <button type="button" class="btn btn-primary ms-3" (click)="updateSupplierByCompany()" data-bs-dismiss="modal">
-          Enregistrer
-        </button>
+        <div class="d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-primary ms-3" (click)="updateSupplierByCompany()"
+                  data-bs-dismiss="modal">
+            Enregistrer
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!--Modal delete contactor-->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteModalLabel">Supprimer</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr d'avoir supprimé cet fournisseur ?
-      </div>
-      <div class="d-flex justify-content-end p-3">
-        <button type="button" class="btn btn-danger ms-3" (click)="deleteSupplierByCompany()" data-bs-dismiss="modal">
-          supprimer
-        </button>
+  <!--Modal delete contactor-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">Supprimer</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr d'avoir supprimé cet fournisseur ?
+        </div>
+        <div class="d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-danger ms-3" (click)="deleteSupplierByCompany()" data-bs-dismiss="modal">
+            supprimer
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

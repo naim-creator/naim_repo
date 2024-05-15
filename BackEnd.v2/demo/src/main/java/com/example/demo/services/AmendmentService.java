@@ -26,7 +26,7 @@ public class AmendmentService {
     public ResponseEntity<String> saveAmendment(AmendmentDto amendmentDto) {
         Amendment amendment = this.amendmentDtoConverter.DtoToAmendment(amendmentDto);
         this.amendmentRepository.save(amendment);
-        return ResponseEntity.ok("votre demande a ete bien enregistre");
+        return ResponseEntity.ok("Data saved");
     }
 
 

@@ -2,14 +2,11 @@
   <div class="d-flex align-items-center mb-3">
     <input class="form-control w-25" type="text" placeholder="search" [(ngModel)]="sh" (keyup.enter)="search()">
     <button class="btn btn-primary" (keyup.enter)="search()"><i class="bi bi-search"></i></button>
-    <div class="alert alert-success" *ngIf="errorMessage!='' && goodRequest">
-      <i class="bi bi-info-circle me-2"></i>{{ errorMessage }}
-    </div>
-    <div class="alert alert-danger" *ngIf="errorMessage!='' && !goodRequest">
-      <i class="bi bi-info-circle me-2"></i>{{ errorMessage }}
+    <div class="alert alert-success" *ngIf="updateRequestMessage!=''">
+      <i class="bi bi-info-circle me-2"></i>{{ updateRequestMessage }}
     </div>
   </div>
-  <div class="table-container" *ngIf="contactorRequestList.length != 0">
+  <div>
     <table class="table table-bordered">
       <caption class="caption-top caption">
         <span class="title">Les demandes d'obtention license</span>
@@ -24,7 +21,7 @@
         <th>message</th>
         <th>date</th>
         <th>status</th>
-        <th></th>
+        <th>action</th>
       </tr>
       </thead>
       <tbody>
@@ -37,19 +34,24 @@
         <td class="message">{{ request.message }}</td>
         <td>{{ request.date }}</td>
         <td
-          [ngClass]="{'refused' : request.status == 'refuser', 'accepted' : request.status === 'accepter'}">{{ request.status }}
+          [ngClass]="{'refused' : request.status == 'refuser', 'accepted' : request.status === 'accepter', 'waiting' : request.status === 'en attente'}">{{ request.status }}
         </td>
         <td class="text-center">
-          <i class="bi bi-check-square-fill me-3" (click)="navigateToCreateContactor(request)"></i>
-          <i class="bi bi-x-square-fill me-3" (click)="declineRequest(request)"></i>
+          <i class="bi bi-check-square-fill me-3" *ngIf="request.status === 'en attente'|| request.status === 'refuser'"
+             (click)="navigateToCreateContactor(request)"></i>
+          <i class="bi bi-x-square-fill me-3" (click)="declineRequest(request)"
+             *ngIf="request.status === 'en attente'"></i>
           <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteModal"
              (click)="selectContactorRequest(request)"></i></td>
       </tr>
       </tbody>
     </table>
-    <div class="w-100 d-flex justify-content-end">
+    <div class="d-flex me-5 position-fixed bottom-0 end-0" *ngIf="dataExist">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
+          <li class="page-item"><a class="page-link bg-primary">{{ totalElements }} demandes d'obtention licence</a>
+          </li>
+          <li class="page-item me-1"><a class="page-link bg-primary">{{ totalPages }} pages</a></li>
           <li class="page-item" (click)="previousPage()"><a class="page-link"><i class="bi bi-caret-left"></i></a></li>
           <li class="page-item ms-2 me-2"><a class="page-link text-center" style="width: 50px;">{{ pageNo + 1 }}</a>
           </li>
@@ -58,7 +60,8 @@
       </nav>
     </div>
   </div>
-  <div class="w-100 h-50 d-flex justify-content-center align-items-center" *ngIf="dataLoading">
+
+  <div class="w-100 h-75 d-flex justify-content-center align-items-center position-absolute top-0" *ngIf="dataLoading">
     <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
     </div>
     <span class="ms-2">Chargement...</span>
@@ -83,4 +86,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center position-absolute top-25 w-100" *ngIf="!dataExist">
+  <img src="assets/OIP.jpeg" class="opacity-25">
 </div>

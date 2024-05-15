@@ -18,7 +18,7 @@ public class Supplier {
     private UUID id;
     private String firstName;
     private String lastName;
-    private String SupplierCompanyName;
+    private String companyName;
     private String phone;
     private String email;
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")

@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>ajouter chantier</h1>
+  <div class="construction">
+    <div class="d-flex align-items-center gap-3">
+      <h2>Sélèctionner un client : </h2>
+      <div class="dropdown">
+        <button class="btn btn-client" [ngClass]="{'border-danger': !validCustomer}" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+          {{ labelListClient }} <i class="bi bi-caret-down-fill ms-3"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let c of customersList" (click)="selectCustomer(c)"><a
+            class="dropdown-item">{{ c.firstName }} {{ c.lastName }}</a>
+          </li>
+        </ul>
+        <span class="text-danger" *ngIf="!validCustomer">client est obligatoire</span>
+      </div>
+    </div>
+    <div class="mt-5">
+      <h2>Les information de devis :</h2>
+      <div class="form mt-3">
+        <div class="d-flex align-items-center gap-5 flex-wrap">
+          <p>Nom de client : <span>{{ devis.devisRequestDto.firstName }}</span></p>
+          <p>Prénom de client : <span>{{ devis.devisRequestDto.lastName }}</span></p>
+          <p>Email de client: <span>{{ devis.devisRequestDto.email }}</span></p>
+          <p>Téléphone de client: <span>{{ devis.devisRequestDto.phone }}</span></p>
+          <p>Total panneau solaire : <span>{{ devis.solarPanel.totalSolarPanel }}</span> TND</p>
+          <p>Total onduleur : <span>{{ devis.inverter.totalInverter }}</span> TND</p>
+          <p>Total systeme de fixation : <span>{{ devis.systemFixing.totalSystemFixing }}</span> TND</p>
+          <p>Total cable : <span>{{ devis.cable.totalCable }}</span> TND</p>
+          <p>Total batterie : <span>{{ devis.battery.totalBattery }}</span> TND</p>
+          <p>Total compteur : <span>{{ devis.meter.totalMeter }}</span> TND</p>
+          <p>Total devis : <span>{{ devis.total }}</span> TND</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-5">
+      <h2>Les information de chantier</h2>
+      <div class="form mt-3">
+        <div class="row">
+          <div class="col-4">
+            <label class="form-label">emplacement :</label>
+            <input class="form-control" [(ngModel)]="construction.location"
+                   [ngClass]="{'border-danger': !validLocation}" type="text">
+            <span class="text-danger" *ngIf="!validLocation">emplacement est obligatoire</span>
+          </div>
+          <div class="col-6">
+            <label class="form-label">description :</label>
+            <textarea class="form-control" [(ngModel)]="construction.description"></textarea>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end w-100">
+          <button class="btn btn-primary" (click)="saveConstruction()">enregistrer <i class="bi bi-floppy ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

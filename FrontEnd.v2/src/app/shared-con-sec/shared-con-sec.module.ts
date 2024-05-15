@@ -19,7 +19,7 @@ import { NewBatteryComponent } from './new-battery/new-battery.component';
 import { MeterComponent } from './meter/meter.component';
 import { NewMeterComponent } from './new-meter/new-meter.component';
 import { SupplierComponent } from './supplier/supplier.component';
-import { NewSupplierComponent } from './new-supplier/new-supplier.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import { NewSupplierComponent } from './new-supplier/new-supplier.component';
     MeterComponent,
     NewMeterComponent,
     SupplierComponent,
-    NewSupplierComponent
+    CustomerComponent
   ],
   imports: [
     CommonModule,

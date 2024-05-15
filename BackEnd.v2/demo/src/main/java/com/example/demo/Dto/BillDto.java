@@ -1,8 +1,5 @@
 package com.example.demo.Dto;
 
-
-import com.example.demo.models.Company;
-import com.example.demo.models.Construction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,5 @@ public class BillDto {
     private String ref;
     private Date date;
     private Double total;
-    private Construction construction;
-    private Company company;
+    private ConstructionDto constructionDto;
 }

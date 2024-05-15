@@ -13,8 +13,9 @@ export class ListContactRequestComponent implements OnInit {
               private route: Router) {
   }
 
-  goodRequest: boolean = false
-  dataExist = false;
+
+  updateRequestMessage: string = "";
+  dataExist: boolean = true;
   filteredData: boolean = false;
   sh: string = ""
   dataLoading: boolean = true;
@@ -22,6 +23,7 @@ export class ListContactRequestComponent implements OnInit {
   totalPages: number = 0
   pageNo: number = 0;
   errorMessage: string = "";
+  totalElements: number = 0;
   contactorRequest: ContactorRequest = {
     email: "",
     firstName: "",
@@ -90,7 +92,10 @@ export class ListContactRequestComponent implements OnInit {
           if (this.contactorRequestList.length == 1 && this.pageNo > 0) {
             this.pageNo -= 1
           }
+          this.updateRequestMessage = err.error.text;
           this.getContactorRequestList(this.pageNo)
+        } else {
+          this.updateRequestMessage = "error est servenu";
         }
       }
     })
@@ -102,7 +107,8 @@ export class ListContactRequestComponent implements OnInit {
       next: (res) => {
         this.contactorRequestList = res.content
         this.totalPages = res.totalPages
-        this.dataExist = res.totalElements != 0 && res.totalPages > 1;
+        this.totalElements = res.totalElements
+        this.dataExist = res.totalElements != 0;
         this.dataLoading = false;
       }
     })
@@ -114,7 +120,9 @@ export class ListContactRequestComponent implements OnInit {
       next: (res) => {
         this.contactorRequestList = res.content
         this.totalPages = res.totalPages
-        this.filteredData = res.content.length != 0 && res.totalPages > 1;
+        this.totalElements = res.totalElements
+        this.filteredData = true;
+        this.dataExist = res.totalElements != 0;
         this.dataLoading = false;
       }
     })
@@ -122,7 +130,15 @@ export class ListContactRequestComponent implements OnInit {
 
   public declineRequest(request: ContactorRequest): void {
     request.status = "refuser";
-    this.service.updateContactorRequest(request).subscribe();
+    this.service.updateContactorRequest(request).subscribe({
+      error: (err) => {
+        if (err.status === 200) {
+          this.updateRequestMessage = err.error.text;
+        } else {
+          this.updateRequestMessage = "error est servenu";
+        }
+      }
+    });
   }
 
   ngOnInit() {

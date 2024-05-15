@@ -40,9 +40,34 @@ export class NewDevisComponent implements OnInit {
   }
 
   devis: Devis = {
-    date: "", ref: "", status: "",
-    company: {id: ""},
-    devisRequest: {id: ""},
+    date: "", ref: "", about: "",
+    companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    },
+    devisRequestDto: {
+      id: "",
+      phone: "",
+      firstName: "",
+      lastName: "",
+      location: "",
+      email: "",
+      status: "",
+      available_area: 0,
+      consumption: 0,
+      building_type: "",
+      roof_type: "",
+      electricity_access: false,
+      post_code: "",
+      companyDto: {
+        id: "", companyName: "", contactorDto: {
+          id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+          licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+        }, address: "", contact: ""
+      }
+    },
     battery: {modelBattery: "", priceBattery: 0, quantityBattery: 0, totalBattery: 0, tvaBattery: 0},
     cable: {modelCable: "", priceCable: 0, quantityCable: 0, totalCable: 0, tvaCable: 0},
     meter: {modelMeter: "", priceMeter: 0, quantityMeter: 0, totalMeter: 0, tvaMeter: 0},
@@ -60,38 +85,73 @@ export class NewDevisComponent implements OnInit {
 
   devisRequest: DevisRequest = {
     firstName: "", lastName: "", email: "", phone: "", building_type: "", location: "", post_code: "",
-    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, company: {id: ""}, status: "en attente"
+    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, status: "en attente"
   }
 
   solarPanel: SolarPanel = {
-    id: "", price: 0, model: "", type_cell: "", weight: 0, height: 0, width: 0, company: {id: ""}, maximum_voltage: 0,
+    id: "", price: 0, model: "", type_cell: "", weight: 0, height: 0, width: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, maximum_voltage: 0,
     maximum_current: 0, quantity: 0, nominal_power: 0, image: ""
   }
 
   inverter: Inverter = {
-    id: "", price: 0, company: {id: ""}, model: "", frequency: "", phase_number: 0, quantity: 0, image: "", tension: 0,
+    id: "", price: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, model: "", frequency: "", phase_number: 0, quantity: 0, image: "", tension: 0,
     nominal_power: 0, type: "", maximum_circuit_voltage: 0, minimal_circuit_current: 0
   }
 
   battery: Battery = {
-    id: "", type: "", company: {id: ""}, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
+    id: "", type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
     storage_capacity: 0, operating_temperature: 0, nominal_voltage: 0, life_cycle: "", maximum_load_voltage: 0,
     lifespan: "", maximum_discharge_voltage: 0
   }
 
   systemFixing: SystemFixing = {
-    id: 0, company: {id: ""}, quantity: 0, charge: 0, image: "", type: "", installation_method: "", materiel: "",
+    id: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, charge: 0, image: "", type: "", installation_method: "", materiel: "",
     model: "", adaptability: "", height: 0, price: 0, width: 0
   }
 
   cable: Cable = {
-    type: "", company: {id: ""}, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
+    type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
     material: "", isolation: "", diameter: 0, length: 0, resistance: 0, nominal_voltage: 0
   }
 
   meter: Meter = {
     id: "", model: "", connexion_type: "", image: "", price: 0, quantity: 0, type: "",
-    company: {id: ""}, capacity: 0
+    companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, capacity: 0
   }
 
   SolarPanelList: any[] = [];
@@ -120,11 +180,11 @@ export class NewDevisComponent implements OnInit {
   chooseMeter: string = "chosisr un meter";
 
   public saveDevis(): void {
-    this.devis.company = {id: this.companyId};
-    this.devis.devisRequest = {id: this.devisRequest.id};
+    this.devis.companyDto.id = String(this.companyId);
+    this.devis.devisRequestDto.id = String(this.devisRequest.id);
     this.devis.date = new Date();
     this.devis.ref = this.generate_ref();
-    this.devis.status = "à envoyer";
+    this.devis.about = "à envoyer";
     this.devisRequest.status = "fait";
     this.devisService.addDevis(this.devis).subscribe({
       error: (err) => {
@@ -456,7 +516,9 @@ export class NewDevisComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.devisRequest = JSON.parse(sessionStorage.getItem('devis-request') as any);
+    if (sessionStorage.getItem('devis-request') !== null) {
+      this.devisRequest = JSON.parse(sessionStorage.getItem('devis-request') as any);
+    }
     this.companyId = sessionStorage.getItem('company') as string;
     this.getSolarPanels(0);
     this.getInverters(0);

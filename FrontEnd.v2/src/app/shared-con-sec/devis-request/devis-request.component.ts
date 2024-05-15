@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {DevisRequestService} from "../../services/devis-request/devis-request.service";
 import {DevisRequest} from "../../models/DevisRequest";
 import {Router} from "@angular/router";
+import {Company} from "../../models/Company";
+
 @Component({
   selector: 'app-devis-request',
   templateUrl: './devis-request.component.html',
@@ -15,9 +17,20 @@ export class DevisRequestComponent implements OnInit {
 
   devisRequest: DevisRequest = {
     firstName: "", lastName: "", email: "", phone: "", building_type: "", location: "", post_code: "",
-    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, company: {id: ""}, status: "en attente"
+    roof_type: "", consumption: 0, electricity_access: false, available_area: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, status: "en attente"
   }
-  companyId: string = ""
+  companyDto: Company = {
+    id: "", companyName: "", contactorDto: {
+      id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+      licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+    }, address: "", contact: ""
+  }
+  message: string = "";
   devisRequestList: Array<DevisRequest> = []
   totalPages: number = 0
   pageNo: number = 0
@@ -30,7 +43,7 @@ export class DevisRequestComponent implements OnInit {
 
   public getDevisRequestByCompany(pageNo: number): void {
     this.dataLoading = true;
-    this.devisRequestService.getDevisRequestByCompany(this.companyId, pageNo).subscribe({
+    this.devisRequestService.getDevisRequestByCompany(this.companyDto.id, pageNo).subscribe({
       next: (res) => {
         this.devisRequestList = res.content;
         this.totalPages = res.totalPages;
@@ -43,7 +56,7 @@ export class DevisRequestComponent implements OnInit {
 
   public getDevisRequestByCompanyFiltered(filter: string, pageNo: number): void {
     this.dataLoading = true;
-    this.devisRequestService.getDevisRequestByCompanyFiltered(this.companyId, pageNo, filter).subscribe({
+    this.devisRequestService.getDevisRequestByCompanyFiltered(this.companyDto.id, pageNo, filter).subscribe({
       next: (res) => {
         this.devisRequestList = res.content;
         this.totalPages = res.totalPages;
@@ -68,7 +81,10 @@ export class DevisRequestComponent implements OnInit {
     this.devisRequestService.updateDevisRequest(this.devisRequest).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = err.error.text
+          this.message = err.error.text
+          setTimeout(()=>{
+            this.message = ""
+          },3000)
         }
       }
     })
@@ -78,11 +94,14 @@ export class DevisRequestComponent implements OnInit {
     this.devisRequestService.deleteDevisRequest(this.devisRequest.id).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.errorMessage = err.error.text
+          this.message = err.error.text
           if (this.devisRequestList.length == 1 && this.pageNo > 0) {
             this.pageNo -= 1
           }
           this.getDevisRequestByCompany(this.pageNo)
+          setTimeout(()=>{
+            this.message = ""
+          },3000)
         }
       }
     })
@@ -134,7 +153,14 @@ export class DevisRequestComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.companyId = sessionStorage.getItem('company') as string;
+    this.companyDto = JSON.parse(sessionStorage.getItem('company') as any);
     this.getDevisRequestByCompany(0);
+    if (sessionStorage.getItem('message') !== null) {
+      this.message = sessionStorage.getItem('message') as string;
+      setTimeout(() => {
+        this.message = ""
+        sessionStorage.setItem('message', "")
+      }, 3000);
+    }
   }
 }

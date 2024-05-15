@@ -16,7 +16,7 @@ public interface ContactorRepository extends JpaRepository<Contactor, UUID> {
     Optional<Contactor> findByEmail(String email);
 
     @Query("SELECT c FROM Contactor c WHERE ( " +
-            "UPPER(c.firstName) like %:search% OR UPPER(c.lastName) like %:search% OR UPPER(c.email) like %:search% OR UPPER(c.address) like %:search% OR c.phone like %:search%)")
+            "UPPER(c.firstName) like %:search% OR UPPER(c.lastName) like %:search% OR UPPER(c.email) like %:search% OR UPPER(c.address) like %:search% OR c.phone like %:search% OR UPPER(c.licence.status) like %:search%)")
     Page<Contactor> findByCustom(@Param("search") String search, Pageable pageable);
 
 }

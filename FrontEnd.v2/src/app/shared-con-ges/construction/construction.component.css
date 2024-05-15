@@ -1,0 +1,78 @@
+.container-fluid {
+  position: relative;
+}
+
+.construction {
+  width: 280px;
+  height: 280px;
+  background-color: #3b7ddd;
+  border-radius: 3px;
+  padding: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.construction:hover {
+  transform: scale(1.02);
+}
+
+.construction p {
+  color: white;
+  font-size: 1.5rem;
+  line-height: 25px;
+  margin: 0 !important;
+}
+
+.arrow {
+  opacity: 0;
+  cursor: pointer;
+  background-color: #0a2a59;
+  color: white;
+  transition: opacity 0.5s;
+  border-radius: 50px !important;
+}
+
+.btn-right, .btn-left {
+  position: absolute;
+  top: 45%;
+  font-size: 1.4rem;
+  padding: 25px;
+  border-radius: 3px;
+}
+
+.btn-right {
+  right: 5px;
+}
+
+.btn-left {
+  left: 5px;
+}
+
+.pageNo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  font-size: 1.5rem;
+  background-color: #0a2a59;
+  color: white;
+}
+
+/* Hover effect on container */
+.container-fluid:hover .arrow,
+.arrow:hover {
+  opacity: 0.4;
+}
+
+/* Make both arrows fully visible when either arrow is hovered */
+.arrow:hover ~ .arrow,
+.arrow:hover {
+  opacity: 1 !important;
+}

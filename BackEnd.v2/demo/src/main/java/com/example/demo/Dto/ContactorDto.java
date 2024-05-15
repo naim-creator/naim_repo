@@ -2,6 +2,7 @@ package com.example.demo.Dto;
 
 
 import com.example.demo.models.Company;
+import com.example.demo.models.Licence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class ContactorDto {
     private String phone;
     private String address;
     private String email;
-    private Company company;
+    private LicenceDto licenceDto;
 }

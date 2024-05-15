@@ -18,8 +18,16 @@ public class CustomerController {
     private final CustomerService customerService;
 
 
-    @GetMapping("get")
-    public CustomerResponse getCustomersByCompany(@RequestParam(value = "id", defaultValue = "0", required = false) UUID id,
+    @GetMapping("get/filter/{id}")
+    public CustomerResponse getCustomersByCompanyFiltered(@PathVariable UUID id,
+                                                          @RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+                                                          @RequestParam(value = "pageSize", defaultValue = "0", required = false) int size,
+                                                          @RequestParam(value = "filter", defaultValue = "0", required = false) String filter) {
+        return this.customerService.getCustomersByCompanyFiltered(id, page, size, filter);
+    }
+
+    @GetMapping("get/{id}")
+    public CustomerResponse getCustomersByCompany(@PathVariable UUID id,
                                                   @RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
                                                   @RequestParam(value = "pageSize", defaultValue = "0", required = false) int size) {
         return this.customerService.getCustomersByCompany(id, page, size);

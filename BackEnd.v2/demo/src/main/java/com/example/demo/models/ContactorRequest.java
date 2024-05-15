@@ -4,6 +4,7 @@ package com.example.demo.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,5 +23,5 @@ public class ContactorRequest {
     private String companyAddress;
     private String message;
     private String status;
-    private Date date;
+    private LocalDate date;
 }

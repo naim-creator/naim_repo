@@ -24,8 +24,4 @@ public class Bill {
     @JsonIdentityReference(alwaysAsId=true)
     @ManyToOne
     private Construction construction;
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
-    @ManyToOne
-    private Company company;
 }

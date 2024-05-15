@@ -20,6 +20,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -33,6 +34,7 @@ public class AuthenticationService {
     private final EmailSenderService emailSenderService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByNom(request.getRole())
                 .orElseThrow(() -> new IllegalStateException("Role was not initialized"));
@@ -42,12 +44,11 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .accountLocked(false)
-                .enabled(false)
+                .enabled(true)
                 .roles(List.of(userRole))
                 .build();
         userRepository.save(user);
         sendValidationEmail(user);
-
     }
 
     private void sendValidationEmail(User user) throws MessagingException {
@@ -59,7 +60,7 @@ public class AuthenticationService {
                 user.fullName(),
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
-                newtoken,"Account activation"
+                newtoken, "Account activation"
         );
 
     }
@@ -80,7 +81,7 @@ public class AuthenticationService {
         String characters = "0123456789";
         StringBuilder codeBuilder = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0 ; i < length; i++){
+        for (int i = 0; i < length; i++) {
             int randomIndex = secureRandom.nextInt(characters.length());
             codeBuilder.append(characters.charAt(randomIndex));
         }
@@ -95,58 +96,19 @@ public class AuthenticationService {
                 )
         );
         var claims = new HashMap<String, Object>();
-        var user = ((User)auth.getPrincipal());
+        var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.fullName());
         var jwtToken = jwtService.generateToken(claims, user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public User getAccount(String email){
-        return userRepository.findByEmail(email);
-    }
-
-    public ResponseEntity<String> activateAccountEntrepreneurByAdmin(Contactor contactor){
-        User user = this.userRepository.findByEmail(contactor.getEmail());
-        user.setEnabled(true);
-        userRepository.save(user);
-        return ResponseEntity.ok("Compte utilisateur a été activer");
-    }
-
-    public ResponseEntity<String> disableAccountEntrepreneurByAdmin(Contactor contactor){
-        User user = this.userRepository.findByEmail(contactor.getEmail());
-        user.setEnabled(false);
-        userRepository.save(user);
-        return ResponseEntity.ok("Compte utilisateur a été désactiver");
-    }
-
-    public ResponseEntity<String> disableAccountWorker(Worker worker){
-        User user = this.userRepository.findByEmail(worker.getEmail());
-        user.setEnabled(false);
-        userRepository.save(user);
-        return ResponseEntity.ok("Compte utilisateur a été désactiver");
-    }
-
-    public ResponseEntity<String> activateAccountWorker(Worker worker){
-        User user = this.userRepository.findByEmail(worker.getEmail());
-        user.setEnabled(true);
-        userRepository.save(user);
-        return ResponseEntity.ok("Compte utilisateur a été activer");
-    }
-
-    public ResponseEntity<String> deleteAccount(String email){
-        User user = this.userRepository.findByEmail(email);
-        this.userRepository.deleteById(user.getId());
-        return ResponseEntity.ok("Compte utilisateur a été supprimer");
-    }
-
-
 
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
-                .orElseThrow(()-> new RuntimeException("Invalid Token"));
-        if(LocalDateTime.now().isAfter(savedToken.getExpiredAt())){
+                .orElseThrow(() -> new RuntimeException("Invalid Token"));
+        if (LocalDateTime.now().isAfter(savedToken.getExpiredAt())) {
             sendValidationEmail(savedToken.getUser());
-            throw  new RuntimeException("Activation token has expired. A new token has been sent to the same email address");
+            throw new RuntimeException("Activation token has expired. A new token has been sent to the same email address");
         }
 
         var user = userRepository.findById(savedToken.getUser().getId())

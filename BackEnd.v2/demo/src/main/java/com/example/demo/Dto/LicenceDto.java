@@ -6,13 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpotDto {
+public class LicenceDto {
+
     private UUID id;
-    private String description;
+    private LocalDate startedAt;
+    private LocalDate expiredAt;
+    private String status;
 }

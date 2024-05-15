@@ -1,7 +1,6 @@
 package com.example.demo.Dto;
 
 
-import com.example.demo.models.Contactor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CompanyDto {
     private UUID id;
-    private String name;
+    private String companyName;
     private String address;
     private String contact;
-    private Contactor contactor;
+    private ContactorDto contactorDto;
 }

@@ -16,13 +16,18 @@ export class NewBatteryComponent implements OnInit {
   imageLink: string = "assets/solar%20panel.jpg";
   companyId: string = ""
   battery: Battery = {
-    id: "", type: "", company: {id: ""}, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
+    id: "", type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
     storage_capacity: 0, operating_temperature: 0, nominal_voltage: 0, life_cycle: "", maximum_load_voltage: 0,
     lifespan: "", maximum_discharge_voltage: 0
   }
 
   public saveBattery(): void {
-    this.battery.company.id = this.companyId;
+    this.battery.companyDto.id = this.companyId;
     this.batteryService.addBattery(this.battery).subscribe({
       error: (err) => {
         if (err.status === 200) {

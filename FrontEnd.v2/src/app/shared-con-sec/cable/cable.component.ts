@@ -24,7 +24,12 @@ export class CableComponent implements OnInit {
   dataLoading: boolean = true;
   companyId: string = "";
   cable: Cable = {
-    type: "", company: {id: ""}, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
+    type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
     material: "", isolation: "", diameter: 0, length: 0, resistance: 0, nominal_voltage: 0
   }
 

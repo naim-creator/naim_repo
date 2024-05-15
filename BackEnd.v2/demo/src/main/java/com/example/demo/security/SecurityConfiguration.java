@@ -41,7 +41,11 @@ public class SecurityConfiguration {
                                         "configuration/ui",
                                         "configuration/security",
                                         "/auth/**",
-                                        "/contactorRequest/add"
+                                        "/contactorRequest/add",
+                                        "/devis/accept/{id}",
+                                        "users/send-code",
+                                        "users/change-password",
+                                        "users/confirm-code"
                                 ).permitAll()
                                 .anyRequest()
                                 .authenticated()

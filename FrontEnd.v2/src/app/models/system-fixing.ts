@@ -1,9 +1,11 @@
 /* tslint:disable */
 /* eslint-disable */
+import {Company} from "./Company";
+
 export interface SystemFixing {
   adaptability: string;
   charge: number;
-  company: {id : string};
+  companyDto: Company;
   height: number;
   id?: any;
   image: string;

@@ -12,6 +12,7 @@ export class InverterComponent implements OnInit {
   constructor(private inverterService: InverterService) {
   }
 
+  message: string = "";
   stock: number = 1000;
   stLevel: number = 0;
   quantity: number = 0;
@@ -24,7 +25,12 @@ export class InverterComponent implements OnInit {
   companyId: string = "";
   dataLoading: boolean = true;
   inverter: Inverter = {
-    id: "", type: "", company: {id: ""}, phase_number: 0, tension: 0, frequency: "", minimal_circuit_current: 0,
+    id: "", type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, phase_number: 0, tension: 0, frequency: "", minimal_circuit_current: 0,
     maximum_circuit_voltage: 0, nominal_power: 0, quantity: 0, model: "", price: 0, image: ""
   }
 
@@ -145,6 +151,13 @@ export class InverterComponent implements OnInit {
 
   ngOnInit() {
     this.companyId = sessionStorage.getItem('company') as string;
+    if(sessionStorage.getItem('message') !== null){
+      this.message = sessionStorage.getItem('message') as string;
+      setTimeout(() => {
+        this.message = ""
+        sessionStorage.setItem('message', "")
+      }, 5000);
+    }
     this.getInverterList(0, this.companyId);
     this.stockLevel();
   }

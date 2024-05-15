@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SolarPanelService} from "../../services/solar-panel/solar-panel.service";
 import {SolarPanel} from "../../models/solar-panel";
+import {Company} from "../../models/Company";
 
 @Component({
   selector: 'app-solar-panel',
@@ -9,9 +10,16 @@ import {SolarPanel} from "../../models/solar-panel";
 })
 export class SolarPanelComponent implements OnInit {
 
-    constructor(private solarPanelService: SolarPanelService) {
-    }
+  constructor(private solarPanelService: SolarPanelService) {
+  }
 
+  companyDto: Company = {
+    id: "", companyName: "", address: "", contact: "", contactorDto: {
+      id: "", licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""},
+      phone: "", email: "", address: "", lastName: "", firstName: ""
+    }
+  }
+  message: string = ""
   stock: number = 1000;
   stLevel: number = 0;
   quantity: number = 0;
@@ -21,15 +29,20 @@ export class SolarPanelComponent implements OnInit {
   totalElements: number = 0;
   pageNo: number = 0;
   filteredData: boolean = false;
-  companyId: string = "";
   dataLoading: boolean = true;
+  dataExist: boolean = true;
   solarPanel: SolarPanel = {
-    id: 0, company: {id: ""}, quantity: 0, type_cell: "", image: "", weight: 0, maximum_current: 0, maximum_voltage: 0,
+    id: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, type_cell: "", image: "", weight: 0, maximum_current: 0, maximum_voltage: 0,
     model: "", nominal_power: 0, width: 0, price: 0, height: 0
   }
 
   public stockLevel(): void {
-    this.solarPanelService.getSolarPanelStockLevel(this.companyId).subscribe({
+    this.solarPanelService.getSolarPanelStockLevel(this.companyDto.id).subscribe({
       next: (res) => {
         this.stLevel = res * 100 / this.stock
       }
@@ -44,16 +57,16 @@ export class SolarPanelComponent implements OnInit {
     if (this.pageNo < this.totalPages - 1) {
       this.pageNo += 1
       if (!this.filteredData) {
-        this.getSolarPanels(this.pageNo, this.companyId)
+        this.getSolarPanels(this.pageNo, this.companyDto.id)
       } else {
-        this.getSolarPanelsFiltered(this.pageNo, this.companyId)
+        this.getSolarPanelsFiltered(this.pageNo, this.companyDto.id)
       }
     } else {
       this.pageNo = 0
       if (!this.filteredData) {
-        this.getSolarPanels(this.pageNo, this.companyId)
+        this.getSolarPanels(this.pageNo, this.companyDto.id)
       } else {
-        this.getSolarPanelsFiltered(this.pageNo, this.companyId)
+        this.getSolarPanelsFiltered(this.pageNo, this.companyDto.id)
       }
     }
   }
@@ -62,16 +75,16 @@ export class SolarPanelComponent implements OnInit {
     if (this.pageNo > 0) {
       this.pageNo -= 1
       if (!this.filteredData) {
-        this.getSolarPanels(this.pageNo, this.companyId)
+        this.getSolarPanels(this.pageNo, this.companyDto.id)
       } else {
-        this.getSolarPanelsFiltered(this.pageNo, this.companyId)
+        this.getSolarPanelsFiltered(this.pageNo, this.companyDto.id)
       }
     } else {
       this.pageNo = this.totalPages - 1
       if (!this.filteredData) {
-        this.getSolarPanels(this.pageNo, this.companyId)
+        this.getSolarPanels(this.pageNo, this.companyDto.id)
       } else {
-        this.getSolarPanelsFiltered(this.pageNo, this.companyId)
+        this.getSolarPanelsFiltered(this.pageNo, this.companyDto.id)
       }
     }
   }
@@ -98,6 +111,7 @@ export class SolarPanelComponent implements OnInit {
         this.totalPages = res.totalPages;
         this.totalElements = res.totalElements;
         this.dataLoading = false;
+        this.dataExist = res.totalElements != 0;
       }
     })
   }
@@ -110,13 +124,14 @@ export class SolarPanelComponent implements OnInit {
         this.totalPages = res.totalPages;
         this.totalElements = res.totalElements;
         this.dataLoading = false;
-        this.filteredData = res.totalElements != 0;
+        this.dataExist = res.totalElements != 0;
+        this.filteredData = true;
       }
     })
   }
 
   public search(): void {
-    this.getSolarPanelsFiltered(0, this.companyId);
+    this.getSolarPanelsFiltered(0, this.companyDto.id);
   }
 
   public getImageUrl(base64String: string | undefined): string {
@@ -138,19 +153,25 @@ export class SolarPanelComponent implements OnInit {
     this.solarPanelService.deleteSolarPanels(this.solarPanel.id).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.getSolarPanels(0, this.companyId);
+          this.getSolarPanels(0, this.companyDto.id);
           this.stockLevel();
           this.pageNo = 0
         }
       }
     })
-
   }
 
 
   ngOnInit() {
-    this.companyId = sessionStorage.getItem('company') as string;
-    this.getSolarPanels(0, this.companyId);
+    this.companyDto = JSON.parse(sessionStorage.getItem('company') as any);
+    if (sessionStorage.getItem('message') !== null) {
+      this.message = sessionStorage.getItem('message') as string;
+      setTimeout(() => {
+        this.message = ""
+        sessionStorage.setItem('message', "")
+      }, 3000);
+    }
+    this.getSolarPanels(0, this.companyDto.id);
     this.stockLevel();
   }
 }

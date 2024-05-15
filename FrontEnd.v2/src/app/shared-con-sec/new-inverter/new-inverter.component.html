@@ -1,66 +1,80 @@
 <div class="container">
-  <h1>ajouter un panneau solaire</h1>
-  <div class="d-flex align-items-center w-100 gap-5">
+  <h1>ajouter un onduleur</h1>
+  <div class="d-flex align-items-center w-100 gap-5 mt-5">
     <div class="image">
       <img [src]=imageLink>
-      <input type="file" class="form-control" (change)="handleFileInput($event)">
+      <input type="file" class="form-control mt-3" (change)="handleFileInput($event)">
     </div>
     <div class="form">
       <div class="row">
         <div class="col">
           <label class="form-label">modele : </label>
-          <input class="form-control" type="text" [(ngModel)]="inverter.model">
+          <input class="form-control" type="text" [ngClass]="{'border-danger': !validModel}"
+                 [(ngModel)]="inverter.model">
+          <span class="text-danger" *ngIf="!validModel">modele est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">puissance nominal : </label>
-          <input class="form-control" type="number" placeholder="A" [(ngModel)]="inverter.nominal_power">
+          <input class="form-control" type="number" placeholder="A" [ngClass]="{'border-danger': !validPower}"
+                 [(ngModel)]="inverter.nominal_power">
+          <span class="text-danger" *ngIf="!validPower">puissance nominal est obligatoire</span>
         </div>
-        <div class="col-3">
-          <label class="form-label">tension de circuit minimal : </label>
-          <input class="form-control" type="number" placeholder="A" [(ngModel)]="inverter.minimal_circuit_current">
+        <div class="col-2">
+          <label class="form-label">tension : </label>
+          <input class="form-control" type="number" placeholder="m" [ngClass]="{'border-danger': !validTension}"
+                 [(ngModel)]="inverter.tension">
+          <span class="text-danger" *ngIf="!validTension">tension est obligatoire</span>
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col-3">
+        <div class="col-4">
           <label class="form-label">voltage de circuit maximal : </label>
-          <input class="form-control" type="number" placeholder="V" [(ngModel)]="inverter.maximum_circuit_voltage">
+          <input class="form-control" type="number" placeholder="V" [ngClass]="{'border-danger': !validVoltage}"
+                 [(ngModel)]="inverter.maximum_circuit_voltage">
+          <span class="text-danger" *ngIf="!validVoltage">Voltage est obligatoire</span>
         </div>
-        <div class="col-3">
-          <label class="form-label">tension : </label>
-          <input class="form-control" type="number" placeholder="m" [(ngModel)]="inverter.tension">
+        <div class="col-4">
+          <label class="form-label">tension de circuit minimal : </label>
+          <input class="form-control" type="number" placeholder="A" [ngClass]="{'border-danger': !validCurrent}"
+                 [(ngModel)]="inverter.minimal_circuit_current">
+          <span class="text-danger" *ngIf="!validCurrent">tension minimal est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">nombre de phase : </label>
-          <input class="form-control" type="number" placeholder="m" [(ngModel)]="inverter.phase_number">
-        </div>
-        <div class="col-3">
-          <label class="form-label">férquence : </label>
-          <input class="form-control" type="number" placeholder="kg" [(ngModel)]="inverter.frequency">
+          <input class="form-control" type="number" placeholder="m" [ngClass]="{'border-danger': !validPhase}"
+                 [(ngModel)]="inverter.phase_number">
+          <span class="text-danger" *ngIf="!validPhase">nombre de phase est obligatoire</span>
         </div>
       </div>
       <div class="row mt-5">
         <div class="col-4">
           <label class="form-label">type d'onduleur : </label>
-          <select class="form-control" [(ngModel)]="inverter.type">
+          <select class="form-control" [ngClass]="{'border-danger': !validType}" [(ngModel)]="inverter.type">
             <option>choisir un type d'onduleur</option>
             <option value="Onduleur central">Onduleur central</option>
             <option value="Onduleur de chaîne">Onduleur de chaîne</option>
             <option value="Micro-onduleur">Micro-onduleur</option>
             <option value="Onduleur avec batterie">Onduleur avec batterie</option>
           </select>
+          <span class="text-danger" *ngIf="!validType">type est obligatoire</span>
+        </div>
+        <div class="col-2">
+          <label class="form-label">férquence : </label>
+          <input class="form-control" type="number" [ngClass]="{'border-danger': !validFrequency}" placeholder="Hz" [(ngModel)]="inverter.frequency">
+          <span class="text-danger" *ngIf="!validFrequency">fréquence est obligatoire</span>
         </div>
         <div class="col-2">
           <label class="form-label">prix: </label>
-          <input class="form-control" placeholder="TND" type="number" [(ngModel)]="inverter.price">
+          <input class="form-control" placeholder="TND" [ngClass]="{'border-danger': !validPrice}" type="number" [(ngModel)]="inverter.price">
+          <span class="text-danger" *ngIf="!validPrice">prix est obligatoire</span>
         </div>
         <div class="col-2">
           <label class="form-label">quantité: </label>
           <input class="form-control" type="number" [(ngModel)]="inverter.quantity">
         </div>
-        <div class="col">
-          <button class="btn btn-primary" (click)="saveInverter()">enregistrer <i class="bi bi-floppy ms-2"></i>
-          </button>
-        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="saveInverter()">enregistrer <i class="bi bi-floppy ms-2"></i></button>
       </div>
     </div>
   </div>

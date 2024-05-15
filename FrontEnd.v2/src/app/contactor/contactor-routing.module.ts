@@ -22,8 +22,9 @@ import {MeterComponent} from "../shared-con-sec/meter/meter.component";
 import {NewMeterComponent} from "../shared-con-sec/new-meter/new-meter.component";
 import {DevisComponent} from "../shared-con-ges/devis/devis.component";
 import {SupplierComponent} from "../shared-con-sec/supplier/supplier.component";
-import {NewSupplierComponent} from "../shared-con-sec/new-supplier/new-supplier.component";
-
+import {ConstructionComponent} from "../shared-con-ges/construction/construction.component";
+import {NewConstructionComponent} from "../shared-con-ges/new-construction/new-construction.component";
+import {CustomerComponent} from "../shared-con-sec/customer/customer.component";
 const routes: Routes = [
   {
     path: "", component: ContactorLandingPageComponent, children: [
@@ -47,8 +48,10 @@ const routes: Routes = [
       {path: "battery/new", component: NewBatteryComponent},
       {path: "meter", component: MeterComponent},
       {path: "meter/new", component: NewMeterComponent},
-      {path:"supplier",component:SupplierComponent},
-      {path:"supplier/new",component:NewSupplierComponent},
+      {path: "supplier", component: SupplierComponent},
+      {path: "construction", component: ConstructionComponent},
+      {path: "construction/new", component: NewConstructionComponent},
+      {path:"customer",component:CustomerComponent},
       {path: "", redirectTo: "home", pathMatch: "full"}
     ]
   }

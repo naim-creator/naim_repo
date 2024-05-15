@@ -2,11 +2,13 @@ package com.example.demo.Dto;
 
 
 import com.example.demo.models.Company;
+import com.example.demo.models.Licence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -23,5 +25,7 @@ public class WorkerDto {
     private String address;
     private String profession;
     private String image;
-    private Company company;
+    private CompanyDto companyDto;
+    private LicenceDto licenceDto;
+    private List<ActivityDto> activityDtos;
 }

@@ -21,7 +21,6 @@ public class Amendment {
     private String ref;
     private Date date;
     private Float price;
-    private String status;
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     @ManyToOne

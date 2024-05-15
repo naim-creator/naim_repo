@@ -27,7 +27,7 @@ public class EmailSenderService {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
-    public void sendEmail(String toEmail,
+    public void sendEmailDevis(String toEmail,
                           String subject,
                           String body,
                           MultipartFile[] attachment) throws MessagingException, IOException {
@@ -46,7 +46,21 @@ public class EmailSenderService {
             );
         }
         mailSender.send(mimeMessage);
-        System.out.println("Mail sent successfully");
+    }
+
+    public void sendEmailPasswordChange(String toEmail,
+                                        String subject,
+                                        String body,
+                                        String passwordChangeCode) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+        mimeMessageHelper.setFrom("cherifayman4545@gmail.com");
+        mimeMessageHelper.setTo(toEmail);
+        mimeMessageHelper.setText(body + passwordChangeCode);
+        mimeMessageHelper.setSubject(subject);
+
+        mailSender.send(mimeMessage);
     }
 
 

@@ -9,6 +9,8 @@ import {MeterService} from "../../services/meter/meter.service";
 import {CableService} from "../../services/cable/cable.service";
 import {DevisRequestService} from "../../services/devis-request/devis-request.service";
 import {WorkerService} from "../../services/worker/worker.service";
+import {ContactorService} from "../../services/contactor/contactor.service";
+import {Contactor} from "../../models/Contactor";
 
 @Component({
   selector: 'app-contactor-home',
@@ -24,16 +26,26 @@ export class ContactorHomeComponent implements OnInit {
               private meterService: MeterService,
               private cableService: CableService,
               private devisRequestService: DevisRequestService,
-              private workerService: WorkerService) {
+              private workerService: WorkerService,
+              private contactorService: ContactorService) {
   }
 
   companyExist: boolean = false
 
   company: Company = {
-    name: "", address: "", contact: "", contactor: {id: ""}
+    companyName: "", address: "", contact: "",
+    contactorDto: {
+      id: "", firstName: "", lastName: "", email: "", phone: "", address: "",
+      licenceDto: {id: "", expiredAt: "", startedAt: "", status: ""}
+    }
+  }
+  contactor: Contactor = {
+    id: "", firstName: "", lastName: "", email: "", phone: "", address: "",
+    licenceDto: {id: "", startedAt: "", expiredAt: "", status: ""}
   }
 
-  contactorId: string = "";
+  licence: any;
+
   maxStock: number = 1000;
   solarPanelStockLevel: number = 0;
   systemFixingStockLevel: number = 0;
@@ -45,11 +57,11 @@ export class ContactorHomeComponent implements OnInit {
   totalWorker: number = 0;
 
   public saveCompany(): void {
-    this.company.contactor = {id: this.contactorId}
+    this.company.contactorDto = this.contactor;
     this.companyService.addCompany(this.company).subscribe({
       error: (err) => {
         if (err.status === 200) {
-          this.companyService.getCompanyByContactorID(this.contactorId).subscribe({
+          this.companyService.getCompanyByContactorID(this.contactor.id).subscribe({
             next: (res) => {
               sessionStorage.setItem('company', res.id);
               location.reload();
@@ -63,7 +75,9 @@ export class ContactorHomeComponent implements OnInit {
   public getSolarPanelStockLevel(id: any): void {
     this.solarPanelService.getSolarPanelStockLevel(id).subscribe({
       next: (res) => {
-        this.solarPanelStockLevel = (res * 100) / this.maxStock;
+        if (res != null) {
+          this.solarPanelStockLevel = (res * 100) / this.maxStock;
+        }
       }
     })
   }
@@ -133,19 +147,23 @@ export class ContactorHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    let companyId: string = sessionStorage.getItem('company') as string;
-    this.contactorId = sessionStorage.getItem('contactor') as string;
-    if (companyId != null) {
+    let companyDto: Company = JSON.parse(sessionStorage.getItem('company') as any);
+    this.contactorService.getContactorByEmail(sessionStorage.getItem('email') as string).subscribe({
+      next: (res) => {
+        this.contactor = res;
+      }
+    })
+    if (companyDto != null) {
       this.companyExist = true
-      this.getCompanyById(companyId);
-      this.getSolarPanelStockLevel(companyId);
-      this.getSystemFixingStockLevel(companyId);
-      this.getInverterStockLevel(companyId);
-      this.getBatteryStockLevel(companyId);
-      this.getMeterStockLevel(companyId);
-      this.getCableStockLevel(companyId);
-      this.getDevisRequestTotal(companyId);
-      this.getWorkerTotal(companyId);
+      this.getCompanyById(companyDto.id);
+      this.getSolarPanelStockLevel(companyDto.id);
+      this.getSystemFixingStockLevel(companyDto.id);
+      this.getInverterStockLevel(companyDto.id);
+      this.getBatteryStockLevel(companyDto.id);
+      this.getMeterStockLevel(companyDto.id);
+      this.getCableStockLevel(companyDto.id);
+      this.getDevisRequestTotal(companyDto.id);
+      this.getWorkerTotal(companyDto.id);
     }
 
   }

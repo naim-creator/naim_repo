@@ -1,41 +1,54 @@
 <div class="container">
   <h1>ajouter un panneau solaire</h1>
-  <div class="d-flex align-items-center w-100 gap-5">
+  <div class="d-flex align-items-center w-100 gap-5 mt-5">
     <div class="image">
       <img [src]=imageLink>
-      <input type="file" class="form-control" (change)="handleFileInput($event)">
+      <input type="file" class="form-control mt-3" (change)="handleFileInput($event)">
     </div>
     <div class="form">
       <div class="row">
         <div class="col">
           <label class="form-label">modele : </label>
-          <input class="form-control" type="text" [(ngModel)]="solarPanel.model">
+          <input class="form-control" type="text" [ngClass]="{'border-danger': !validModel}"
+                 [(ngModel)]="solarPanel.model">
+          <span class="text-danger" *ngIf="!validModel">modele est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">puissance nominal : </label>
-          <input class="form-control" type="number" placeholder="A" [(ngModel)]="solarPanel.nominal_power">
+          <input class="form-control" type="number" placeholder="A" [ngClass]="{'border-danger': !validPower}"
+                 [(ngModel)]="solarPanel.nominal_power">
+          <span class="text-danger" *ngIf="!validPower">puissance nominal est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">tension maximal : </label>
-          <input class="form-control" type="number" placeholder="A" [(ngModel)]="solarPanel.maximum_voltage">
+          <input class="form-control" type="number" placeholder="A" [ngClass]="{'border-danger': !validVoltage}"
+                 [(ngModel)]="solarPanel.maximum_voltage">
+          <span class="text-danger" *ngIf="!validVoltage">tension maximal est obligatoire</span>
         </div>
       </div>
       <div class="row mt-5">
         <div class="col-3">
           <label class="form-label">courant nominal : </label>
-          <input class="form-control" type="number" placeholder="V" [(ngModel)]="solarPanel.maximum_current">
+          <input class="form-control" type="number" placeholder="V" [ngClass]="{'border-danger': !validCurrent}"
+                 [(ngModel)]="solarPanel.maximum_current">
+          <span class="text-danger" *ngIf="!validCurrent">courant nominal est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">hauteur : </label>
-          <input class="form-control" type="number" placeholder="m" [(ngModel)]="solarPanel.height">
+          <input class="form-control" type="number" [ngClass]="{'border-danger': !validHeight}" placeholder="m"
+                 [(ngModel)]="solarPanel.height">
+          <span class="text-danger" *ngIf="!validHeight">hauteur est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">longueur : </label>
-          <input class="form-control" type="number" placeholder="m" [(ngModel)]="solarPanel.width">
+          <input class="form-control" type="number" placeholder="m" [ngClass]="{'border-danger': !validWidth}"
+                 [(ngModel)]="solarPanel.width">
+          <span class="text-danger" *ngIf="!validWidth">longueur est obligatoire</span>
         </div>
         <div class="col-3">
           <label class="form-label">poids : </label>
-          <input class="form-control" type="number" placeholder="kg" [(ngModel)]="solarPanel.weight">
+          <input class="form-control" type="number" placeholder="kg" [ngClass]="{'border-danger': !validWeight}" [(ngModel)]="solarPanel.weight">
+          <span class="text-danger" *ngIf="!validWeight">poids est obligatoire</span>
         </div>
       </div>
       <div class="row mt-5">
@@ -54,7 +67,8 @@
         </div>
         <div class="col-2">
           <label class="form-label">prix: </label>
-          <input class="form-control" placeholder="TND" type="number" [(ngModel)]="solarPanel.price">
+          <input class="form-control" placeholder="TND" type="number" [ngClass]="{'border-danger': !validPrice}" [(ngModel)]="solarPanel.price">
+          <span class="text-danger" *ngIf="!validPrice">prix est obligatoire</span>
         </div>
         <div class="col-2">
           <label class="form-label">quantité: </label>

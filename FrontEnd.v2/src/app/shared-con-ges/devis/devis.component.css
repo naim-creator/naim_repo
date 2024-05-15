@@ -1,6 +1,5 @@
 .container-fluid {
   padding-top: 100px;
-  height: 100%;
   padding-right: 50px;
   padding-left: 50px;
 }
@@ -122,4 +121,32 @@ i:hover {
 .profile-image {
   width: 50px;
   height: 35px;
+}
+
+.bi-send{
+  color: #2222ea;
+}
+
+.bi-hammer{
+  color: #3b7ddd;
+}
+
+.toSend{
+  background-color: orange;
+  color: white;
+}
+
+.toAccept{
+  background-color: #3b7ddd;
+  color: white;
+}
+
+.accepted{
+  background-color: green;
+  color: white;
+}
+
+.bg-primary{
+  background-color: #3b7ddd !important;
+  color: white !important;
 }

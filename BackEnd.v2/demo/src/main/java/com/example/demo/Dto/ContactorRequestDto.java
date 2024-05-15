@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,5 +24,5 @@ public class ContactorRequestDto {
     private String companyAddress;
     private String message;
     private String status;
-    private Date date;
+    private LocalDate date;
 }

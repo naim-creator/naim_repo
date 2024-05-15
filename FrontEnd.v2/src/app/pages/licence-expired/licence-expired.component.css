@@ -1,0 +1,17 @@
+.container-fluid{
+  background-color: #3b7ddd;
+}
+
+.message{
+  text-align: center;
+  font-size: 4rem;
+  width: 50%;
+  line-height: 75px;
+  color: white;
+}
+
+.message span{
+  color: #0a2a59;
+  font-weight: 600;
+  text-decoration: underline;
+}

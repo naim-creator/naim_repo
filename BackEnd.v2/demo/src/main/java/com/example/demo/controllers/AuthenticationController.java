@@ -35,40 +35,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
-    @PutMapping("/activate-account/contactor")
-    public ResponseEntity<?> activateAccount(@RequestBody Contactor contactor) {
-        return this.authenticationService.activateAccountEntrepreneurByAdmin(contactor);
-    }
-
-    @PutMapping("/disable-account/contactor")
-    public ResponseEntity<?> disableAccount(@RequestBody Contactor contactor) {
-        return this.authenticationService.disableAccountEntrepreneurByAdmin(contactor);
-    }
-
-    @PutMapping("/activate-account/worker")
-    public ResponseEntity<?> activateAccountWorker(@RequestBody Worker worker) {
-        return this.authenticationService.activateAccountWorker(worker);
-    }
-
-    @PutMapping("/disable-account/worker")
-    public ResponseEntity<?> disableAccountWorker(@RequestBody Worker worker) {
-        return this.authenticationService.disableAccountWorker(worker);
-    }
-
-    @GetMapping("get/account/{email}")
-    public User getAccount(@PathVariable String email) {
-        return this.authenticationService.getAccount(email);
-    }
-
     @GetMapping("/activate-account")
     public void confirm(
             @RequestParam String token
     ) throws MessagingException {
         authenticationService.activateAccount(token);
-    }
-
-    @DeleteMapping("/delete/{email}")
-    public ResponseEntity<?> deleteAccount(@PathVariable String email) {
-        return this.authenticationService.deleteAccount(email);
     }
 }

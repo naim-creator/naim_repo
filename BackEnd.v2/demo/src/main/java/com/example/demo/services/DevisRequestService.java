@@ -65,18 +65,18 @@ public class DevisRequestService {
     public ResponseEntity<String> saveDevisRequest(DevisRequestDto devisRequestDto) {
         DevisRequest devisRequest = devisRequestDtoConverter.DtoToDevisRequest(devisRequestDto);
         this.devisRequestRepository.save(devisRequest);
-        return ResponseEntity.ok("Data saved");
+        return ResponseEntity.ok("Demande devis est ajouté");
     }
 
     public ResponseEntity<String> updateDevisRequest(DevisRequestDto devisRequestDto) {
         DevisRequest devisRequest = devisRequestDtoConverter.DtoToDevisRequest(devisRequestDto);
         this.devisRequestRepository.save(devisRequest);
-        return ResponseEntity.ok("Data updated");
+        return ResponseEntity.ok("Demande devis est modifié");
     }
 
     public ResponseEntity<String> deleteDevisRequestById(UUID id) {
         this.devisRequestRepository.deleteById(id);
-        return ResponseEntity.ok("Data deleted");
+        return ResponseEntity.ok("Demande devis est supprimé");
     }
 
 }

@@ -27,7 +27,7 @@ public class Role {
     @Column(unique = true)
     private String nom;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<User> users;
 

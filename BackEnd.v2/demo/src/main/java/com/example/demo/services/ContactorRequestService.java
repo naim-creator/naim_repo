@@ -61,17 +61,17 @@ public class ContactorRequestService {
     public ResponseEntity<String> saveContactorRequest(ContactorRequestDto contactorRequestDto) {
         ContactorRequest contactorRequest = contactorRequestDtoConverter.DtoToContactorRequest(contactorRequestDto);
         this.contactorRequestRepository.save(contactorRequest);
-        return ResponseEntity.ok("data Saved");
+        return ResponseEntity.ok("Votre demande d'obtention licence est envoyé avec succès");
     }
 
     public ResponseEntity<String> updateContactorRequest(ContactorRequestDto contactorRequestDto) {
         ContactorRequest contactorRequest = contactorRequestDtoConverter.DtoToContactorRequest(contactorRequestDto);
         this.contactorRequestRepository.save(contactorRequest);
-        return ResponseEntity.ok("data Update");
+        return ResponseEntity.ok("demande d'obtention licence est modifié");
     }
 
     public ResponseEntity<String> deleteContactorRequest(UUID id) {
         this.contactorRequestRepository.deleteById(id);
-        return ResponseEntity.ok("Data deleted");
+        return ResponseEntity.ok("demande d'obtention licence est supprimé");
     }
 }

@@ -41,6 +41,22 @@ public class CompanyService {
         return companyResponse;
     }
 
+    public CompanyResponse getAllCompaniesFiltered(int page, int size,String filter) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Company> companies = companyRepository.findCompaniesFiltered(filter,pageable);
+        List<CompanyDto> companyDtos = companies.getContent().stream()
+                .map(companyDtoConverter::CompanyToDto)
+                .collect(Collectors.toList());
+        CompanyResponse companyResponse = new CompanyResponse();
+        companyResponse.setContent(companyDtos);
+        companyResponse.setPageNo(companies.getNumber());
+        companyResponse.setPageSize(companies.getSize());
+        companyResponse.setTotalElements(companies.getTotalElements());
+        companyResponse.setTotalPages(companies.getTotalPages());
+        companyResponse.setLast(companies.isLast());
+        return companyResponse;
+    }
+
     public CompanyDto getCompanyById(UUID id) throws Exception {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isPresent()) {
@@ -60,18 +76,18 @@ public class CompanyService {
     public ResponseEntity<String> updateCompany(CompanyDto companyDto) {
         Company company = companyDtoConverter.DtoToCompany(companyDto);
         companyRepository.save(company);
-        return ResponseEntity.ok("Data Updated");
+        return ResponseEntity.ok("Entreprise est modifié");
     }
 
     public ResponseEntity<String> saveCompany(CompanyDto companyDto) {
         Company company = companyDtoConverter.DtoToCompany(companyDto);
         companyRepository.save(company);
-        return ResponseEntity.ok("Data Saved");
+        return ResponseEntity.ok("Entreprise est enregisté");
     }
 
     public ResponseEntity<String> deleteCompanyById(UUID id) {
         companyRepository.deleteById(id);
-        return ResponseEntity.ok("Data Deleted");
+        return ResponseEntity.ok("Entreprise est supprimé");
     }
 
 

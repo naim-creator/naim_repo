@@ -4,19 +4,21 @@ import {MaterielInverter} from "./materiel-inverter";
 import {MaterielMeter} from "./materiel-meter";
 import {MaterielSolarPanel} from "./materiel-solar-panel";
 import {MaterielSystemFixing} from "./materiel-system-fixing";
+import {DevisRequest} from "./DevisRequest";
+import {Company} from "./Company";
 
 export interface Devis {
-  id?: any,
+  idDevis?: any,
   battery: MaterielBattery;
   cable: MaterielCable;
-  company?: { id: string };
-  devisRequest ?: {id : string};
-  date?: any;
+  companyDto: Company;
+  devisRequestDto : DevisRequest;
+  date: any;
   inverter: MaterielInverter;
   meter: MaterielMeter;
-  ref?: string;
+  ref: string;
   solarPanel: MaterielSolarPanel;
-  status?: string;
+  about: string;
   systemFixing: MaterielSystemFixing;
-  total?: number;
+  total: number;
 }

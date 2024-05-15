@@ -1,0 +1,20 @@
+<div class="container-fluid h-75 pt-5">
+  <div class="d-flex justify-content-start align-items-center flex-wrap gap-4 w-100 h-100">
+    <div class="construction" *ngFor="let c of constructionList">
+      <p>{{ c.location }}</p>
+      <p>{{ c.customerDto.firstName }} {{ c.customerDto.lastName }}</p>
+    </div>
+  </div>
+</div>
+
+<span class="d-flex align-items-center justify-content-center w-100 position-absolute bottom-0 mb-5">
+  <span class="pageNo"><span>1</span></span>
+</span>
+
+<span class="arrow btn-right me-5">
+  <i class="bi bi-arrow-right " style="padding-top: 700px!important;"></i>
+</span>
+
+<span class="arrow btn-left ms-5">
+  <i class="bi bi-arrow-left "></i>
+</span>

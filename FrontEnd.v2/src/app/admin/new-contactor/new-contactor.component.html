@@ -16,7 +16,7 @@
     </div>
     <div class="d-flex w-100">
       <div id="image">
-        <img src="../../../assets/entrepreneur.jpg" alt="" srcset="" width="100%">
+        <img src="assets/entrepreneur.png" alt="" srcset="" width="100%">
       </div>
       <div id="form">
         <div class="row mt-5">
@@ -25,11 +25,17 @@
             <div class="row">
               <div class="col">
                 <label class="form-label">Nom :</label>
-                <input class="form-control" type="text" [(ngModel)]="contactor.firstName">
+                <input class="form-control" type="text" (keyup)="checkFirstNameValid()"
+                       [ngClass]="{'border-danger': !validFirstName}"
+                       [(ngModel)]="contactor.firstName">
+                <span class="text-danger" *ngIf="!validFirstName">Nom est obligatoire</span>
               </div>
               <div class="col">
                 <label class="form-label">Prénom :</label>
-                <input class="form-control" type="text" [(ngModel)]="contactor.lastName">
+                <input class="form-control" type="text" (keyup)="checkLastNameValid()"
+                       [ngClass]="{'border-danger': !validLastName}"
+                       [(ngModel)]="contactor.lastName">
+                <span class="text-danger" *ngIf="!validLastName">Prénom est obligatoire</span>
               </div>
             </div>
             <div class="row mt-3">
@@ -50,15 +56,33 @@
             <div class="row">
               <div class="col">
                 <label class="form-label">Email :</label>
-                <input class="form-control" type="email" [(ngModel)]="contactor.email">
+                <input class="form-control" type="email" (keyup)="checkValidationEmail()"
+                       [ngClass]="{'border-danger': !validEmail}" [(ngModel)]="contactor.email">
+                <span class="text-danger" *ngIf="!validEmail">Email n'est pas bien formet</span>
               </div>
-              <div class="col">
+              <div class="col-3">
                 <label class="form-label">Password :</label>
-                <input class="form-control" type="password" [(ngModel)]="user.password">
+                <input class="form-control" type="password" (keyup)="checkValidationPassword()"
+                       [ngClass]="{'border-danger': !validPassword}" [(ngModel)]="password">
+                <span class="text-danger" *ngIf="!validPassword">Password de longueur 6 au minimum</span>
+              </div>
+              <div class="col-3">
+                <label class="form-label">Licence :</label>
+                <select class="form-control" (change)="checkValidLicence($event)" [ngClass]="{'border-danger': !validLicence}">
+                  <option>choisir durée licence</option>
+                  <option value="1">1 mois</option>
+                  <option value="3">3 mois</option>
+                  <option value="6">6 mois</option>
+                  <option value="12">12 mois</option>
+                </select>
+                <span class="text-danger" *ngIf="!validLicence">licence est obligatoire</span>
               </div>
             </div>
+            <div class="row mt-3">
+
+            </div>
             <div class="d-flex justify-content-end align-items-center mt-5">
-              <button class="btn btn-primary" (click)="saveContactor()">enregistrer</button>
+              <button class="btn btn-primary" (click)="saveLicence()">enregistrer</button>
             </div>
           </div>
         </div>

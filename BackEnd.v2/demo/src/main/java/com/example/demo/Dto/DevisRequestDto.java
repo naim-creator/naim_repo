@@ -1,7 +1,5 @@
 package com.example.demo.Dto;
 
-import com.example.demo.models.Company;
-import com.example.demo.models.Devis;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +25,5 @@ public class DevisRequestDto {
     private Boolean electricity_access;
     private Float consumption;
     private String status;
-    private Devis devis;
-    private Company company;
+    private CompanyDto companyDto;
 }

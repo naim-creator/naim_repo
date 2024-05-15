@@ -14,22 +14,44 @@ export class NewSolarPanelComponent implements OnInit {
               private route: Router) {
   }
 
-  imageLink: string = "assets/solar%20panel.jpg";
+  imageLink: string = "assets/noImage.jpg";
   companyId: string = "";
+  validModel: boolean = true;
+  validPower: boolean = true;
+  validVoltage: boolean = true;
+  validCurrent: boolean = true;
+  validHeight: boolean = true;
+  validWidth: boolean = true;
+  validWeight: boolean = true;
+  validPrice: boolean = true;
   solarPanel: SolarPanel = {
-    company: {id: ""}, quantity: 0, type_cell: "", image: "", weight: 0, maximum_current: 0, maximum_voltage: 0,
+    companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, type_cell: "", image: "", weight: 0, maximum_current: 0, maximum_voltage: 0,
     model: "", nominal_power: 0, width: 0, price: 0, height: 0
   }
 
   public saveSolarPanel(): void {
-    this.solarPanel.company.id = this.companyId
-    this.solarPanelService.addSolarPanels(this.solarPanel).subscribe({
-      error: (err) => {
-        if (err.status === 200) {
-          this.route.navigate(['contactor/solar-panel']).then(r => console.log(r))
+    this.checkValidModel();
+    this.checkValidCurrent();
+    this.checkValidHeight();
+    this.checkValidPower();
+    this.checkValidWidth();
+    this.checkValidVoltage();
+    this.checkValidPrice();
+    this.checkValidWeight()
+    if (this.validPrice && this.validWeight && this.validHeight && this.validWidth && this.validCurrent && this.validModel && this.validVoltage && this.validPower) {
+      this.solarPanelService.addSolarPanels(this.solarPanel).subscribe({
+        error: (err) => {
+          if (err.status === 200) {
+            this.route.navigate(['contactor/solar-panel']).then(r => sessionStorage.setItem('message', 'panneaux solaire est enregistré'))
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   public handleFileInput(event: any): void {
@@ -44,8 +66,40 @@ export class NewSolarPanelComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  public checkValidModel(): void {
+    this.validModel = this.solarPanel.model !== "";
+  }
+
+  public checkValidPower(): void {
+    this.validPower = this.solarPanel.nominal_power !== 0;
+  }
+
+  public checkValidVoltage(): void {
+    this.validVoltage = this.solarPanel.maximum_voltage !== 0;
+  }
+
+  public checkValidCurrent(): void {
+    this.validCurrent = this.solarPanel.maximum_current !== 0;
+  }
+
+  public checkValidHeight(): void {
+    this.validHeight = this.solarPanel.height !== 0;
+  }
+
+  public checkValidWidth(): void {
+    this.validWidth = this.solarPanel.width !== 0;
+  }
+
+  public checkValidWeight(): void {
+    this.validWeight = this.solarPanel.weight !== 0;
+  }
+
+  public checkValidPrice(): void {
+    this.validPrice = this.solarPanel.price !== 0;
+  }
+
   ngOnInit() {
-    this.companyId = sessionStorage.getItem('company') as string;
+    this.solarPanel.companyDto = JSON.parse(sessionStorage.getItem('company') as any);
   }
 
 }

@@ -1,8 +1,10 @@
 /* tslint:disable */
 
 /* eslint-disable */
+import {Company} from "./Company";
+
 export interface Cable {
-  company: { id: string };
+  companyDto: Company;
   diameter: number;
   id?: any;
   image: string;

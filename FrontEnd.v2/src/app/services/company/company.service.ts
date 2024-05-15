@@ -22,6 +22,16 @@ export class CompanyService {
     return this.http.get(this.link + "/company/get?" + params.toString(), {headers: head_obj});
   }
 
+  public getCompaniesFiltered(pageNo:number,filter:string):Observable<any>{
+    let token=sessionStorage.getItem('token') as string;
+    let head_obj=new HttpHeaders().set("Authorization","Bearer "+token);
+    const params=new URLSearchParams();
+    params.set('pageNo',String(pageNo))
+    params.set('pageSize','12')
+    params.set('filter',filter)
+    return this.http.get(this.link+"/company/get/filter?"+params.toString(),{headers:head_obj})
+  }
+
   public getCompanyById(id: any): Observable<any> {
     let token = sessionStorage.getItem('token') as string;
     let head_obj = new HttpHeaders().set("Authorization", "Bearer " + token);

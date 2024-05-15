@@ -1,8 +1,10 @@
 /* tslint:disable */
 
 /* eslint-disable */
+import {Company} from "./Company";
+
 export interface Battery {
-  company: { id: string };
+  companyDto: Company;
   date_manufacture: string;
   id?: any;
   image: string;

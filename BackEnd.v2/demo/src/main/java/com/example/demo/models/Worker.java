@@ -1,4 +1,5 @@
 package com.example.demo.models;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -23,12 +24,14 @@ public class Worker {
     private String phone;
     private String profession;
     @Lob
-    @Column( name = "image", length = 1000000000)
+    @Column(name = "image", length = 1000000000)
     private String image;
     @ManyToMany
     private List<Activity> activities;
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     private Company company;
+    @ManyToOne
+    private Licence licence;
 }

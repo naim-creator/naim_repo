@@ -24,7 +24,12 @@ export class MeterComponent implements OnInit {
   dataLoading: boolean = true;
   meter: Meter = {
     id: "", model: "", connexion_type: "", image: "", price: 0, quantity: 0, type: "",
-    company: {id: ""}, capacity: 0
+    companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, capacity: 0
   }
 
   public selectMeter(meter: Meter): void {

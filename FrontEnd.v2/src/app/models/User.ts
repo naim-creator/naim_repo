@@ -1,9 +1,9 @@
 export interface User{
   id ?: any;
-  firstName ?: string;
-  lastName ?: string;
+  firstName : string;
+  lastName : string;
   email : string;
   password : string;
-  role ?: string;
-  enabled ?: boolean;
+  role : string;
+  enabled : boolean;
 }

@@ -11,6 +11,7 @@ export class SystemFixingComponent implements OnInit {
   constructor(private systemFixingService: SystemFixingService) {
   }
 
+  message: string = "";
   stock: number = 1000;
   stLevel: number = 0;
   quantity: number = 0;
@@ -23,7 +24,12 @@ export class SystemFixingComponent implements OnInit {
   companyId: string = ""
   dataLoading: boolean = true;
   systemFixing: SystemFixing = {
-    id: 0, company: {id: ""}, quantity: 0, charge: 0, image: "", type: "", installation_method: "", materiel: "",
+    id: 0, companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, charge: 0, image: "", type: "", installation_method: "", materiel: "",
     model: "", adaptability: "", height: 0, price: 0, width: 0
   }
 
@@ -145,6 +151,13 @@ export class SystemFixingComponent implements OnInit {
 
   ngOnInit() {
     this.companyId = sessionStorage.getItem('company') as string;
+    if (sessionStorage.getItem('message') !== null) {
+      this.message = sessionStorage.getItem('message') as string;
+      setTimeout(() => {
+        this.message = ""
+        sessionStorage.setItem('message', "")
+      }, 5000);
+    }
     this.getSystemFixingList(0, this.companyId);
     this.stockLevel();
   }

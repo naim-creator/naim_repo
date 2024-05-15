@@ -19,6 +19,6 @@ public class AuthenticationRequest {
     private String email;
     @NotEmpty(message = "Password is est vide")
     @NotBlank(message = "Password is invalid")
-    @Size(min = 8, message = "Password doit etre 8 characters de longueur minimum")
+    @Size(min = 6, message = "Password doit etre 6 characters de longueur minimum")
     private String password;
 }

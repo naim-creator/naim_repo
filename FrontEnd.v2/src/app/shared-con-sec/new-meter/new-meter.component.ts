@@ -17,11 +17,16 @@ export class NewMeterComponent implements OnInit {
   companyId: string = "";
   meter: Meter = {
     id: "", model: "", connexion_type: "", image: "", price: 0, quantity: 0, type: "",
-    company: {id: ""}, capacity: 0
+    companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, capacity: 0
   }
 
   public saveMeter(): void {
-    this.meter.company.id = this.companyId
+    this.meter.companyDto.id = this.companyId
     this.meterService.addMeter(this.meter).subscribe({
       error: (err) => {
         if (err.status === 200) {

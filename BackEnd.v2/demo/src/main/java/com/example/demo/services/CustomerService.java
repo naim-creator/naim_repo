@@ -42,6 +42,23 @@ public class CustomerService {
         return customerResponse;
     }
 
+    public CustomerResponse getCustomersByCompanyFiltered(UUID id, int page, int size, String filter) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Customer> customers = customerRepository.findCustomersByCompanyIdFiltered(id, filter, pageable);
+        List<CustomerDto> content = customers.getContent().stream()
+                .map(customerDtoConverter::CustomerToDto)
+                .collect(Collectors.toList());
+        CustomerResponse customerResponse = new CustomerResponse();
+        customerResponse.setContent(content);
+        customerResponse.setPageNo(customers.getNumber());
+        customerResponse.setPageSize(customers.getSize());
+        customerResponse.setTotalElements(customers.getTotalElements());
+        customerResponse.setTotalPages(customers.getTotalPages());
+        customerResponse.setLast(customers.isLast());
+
+        return customerResponse;
+    }
+
     public ResponseEntity<String> saveCustomer(CustomerDto customerDto) {
         Customer customer = customerDtoConverter.DtoToCustomer(customerDto);
         customerRepository.save(customer);

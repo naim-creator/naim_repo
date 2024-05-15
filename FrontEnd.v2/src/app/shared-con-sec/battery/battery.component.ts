@@ -22,9 +22,14 @@ export class BatteryComponent implements OnInit {
   filteredData: boolean = false;
   companyId: string = ""
   dataLoading: boolean = true;
-  
+
   battery: Battery = {
-    id: "", type: "", company: {id: ""}, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
+    id: "", type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, quantity: 0, image: "", price: 0, model: "", date_manufacture: "",
     storage_capacity: 0, operating_temperature: 0, nominal_voltage: 0, life_cycle: "", maximum_load_voltage: 0,
     lifespan: "", maximum_discharge_voltage: 0
   }

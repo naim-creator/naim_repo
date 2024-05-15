@@ -1,7 +1,8 @@
 export interface Company{
   id ?: any;
-  name ?: string;
+  companyName ?: string;
   address ?: string;
   contact ?: string;
-  contactor ?: {id : string};
+  contactor?:{id:any};
+  contactorDto?:any;
 }

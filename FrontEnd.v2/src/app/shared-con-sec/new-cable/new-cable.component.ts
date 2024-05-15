@@ -16,12 +16,17 @@ export class NewCableComponent implements OnInit {
   imageLink: string = "assets/solar%20panel.jpg";
   companyId: string = "";
   cable: Cable = {
-    type: "", company: {id: ""}, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
+    type: "", companyDto: {
+      id: "", companyName: "", contactorDto: {
+        id: "", firstName: "", lastName: "", address: "", email: "", phone: "",
+        licenceDto: {id: "", status: "", expiredAt: "", startedAt: ""}
+      }, address: "", contact: ""
+    }, model: "", section_transversal: "", image: "", price: 0, quantity: 0,
     material: "", isolation: "", diameter: 0, length: 0, resistance: 0, nominal_voltage: 0
   }
 
   public saveCable(): void {
-    this.cable.company.id = this.companyId
+    this.cable.companyDto.id = this.companyId
     this.cableService.addCable(this.cable).subscribe({
       error: (err) => {
         if (err.status === 200) {

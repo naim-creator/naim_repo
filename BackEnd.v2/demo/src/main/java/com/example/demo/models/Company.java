@@ -14,7 +14,7 @@ public class Company {
     @Id
     @GeneratedValue
     private UUID id;
-    private String name;
+    private String companyName;
     private String address;
     private String contact;
     @OneToOne
@@ -45,8 +45,4 @@ public class Company {
     private List<Activity> activityList;
     @OneToMany(mappedBy = "company")
     private List<Construction> constructionList;
-    @OneToMany(mappedBy = "company")
-    private List<Bill> bills;
-    @OneToMany(mappedBy = "company")
-    private List<Supplier>suppliers;
 }

@@ -16,6 +16,6 @@ public interface ContactorRequestRepository extends JpaRepository<ContactorReque
             "OR UPPER(c.lastName) like %:search% " +
             "OR UPPER(c.email) like %:search% " +
             "OR UPPER(c.companyName) like %:search% " +
-            "OR c.phone like %:search% OR c.companyAddress like %:search% OR c.message like %:search%)")
+            "OR c.phone like %:search% OR c.companyAddress like %:search% OR c.message like %:search% OR c.status like %:search%)")
     Page<ContactorRequest> findByCustom(@Param("search") String search, Pageable pageable);
 }

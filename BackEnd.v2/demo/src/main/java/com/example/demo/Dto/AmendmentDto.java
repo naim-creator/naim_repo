@@ -1,7 +1,6 @@
 package com.example.demo.Dto;
 
 
-import com.example.demo.models.Construction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,5 @@ public class AmendmentDto {
     private String ref;
     private Date date;
     private Float price;
-    private String status;
-    private Construction construction;
+    private ConstructionDto constructionDto;
 }

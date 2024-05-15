@@ -1,7 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+import {Company} from "./Company";
+
 export interface SolarPanel {
-  company: {id : string};
+  companyDto: Company;
   height: number;
   id?: any;
   image: string;

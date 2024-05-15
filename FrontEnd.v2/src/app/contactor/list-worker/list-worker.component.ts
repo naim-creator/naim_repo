@@ -3,6 +3,7 @@ import {WorkerService} from "../../services/worker/worker.service";
 import {AuthService} from "../../services/authentication/auth.service";
 import {User} from "../../models/User";
 import {Worker} from "../../models/Worker";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-list-worker',
@@ -11,7 +12,7 @@ import {Worker} from "../../models/Worker";
 })
 export class ListWorkerComponent implements OnInit {
   constructor(private workerService: WorkerService,
-              private authService: AuthService) {
+              private userService: UserService) {
   }
 
   workerList: Array<Worker> = []
@@ -23,8 +24,16 @@ export class ListWorkerComponent implements OnInit {
   dataExist: boolean = false
   filteredData: boolean = false
   companyId: string = ""
+  dataLoading: boolean = false;
   worker: Worker = {
-    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "", company: {id: ""}
+    id: "", firstName: "", lastName: "", address: "", email: "", phone: "", profession: "", image: "",
+    companyDto: {
+      id: "", companyName: "", address: "", contact: "", contactorDto: {
+        id: "", firstName: "", lastName: "", email: "", phone: "", address: "", licenceDto: {
+          id: "", status: "", startedAt: "", expiredAt: ""
+        }
+      }
+    }
   }
   user: User = {
     id: "", firstName: "", lastName: "", email: "", password: "", role: "", enabled: false
@@ -35,27 +44,31 @@ export class ListWorkerComponent implements OnInit {
   }
 
   public getWorkerListByCompany(pageNo: number): void {
+    this.dataLoading = true;
     this.workerService.getWorkerListByCompany(pageNo, this.companyId).subscribe({
       next: (res) => {
         this.workerList = res.content
         this.totalPages = res.totalPages
         this.dataExist = res.content.length != 0
+        this.dataLoading = false;
       }
     })
   }
 
   public getWorkerListByCompanyFiltered(pageNo: number): void {
+    this.dataLoading = true;
     this.workerService.getWorkerListByCompanyFiltered(this.sh, pageNo, this.companyId).subscribe({
       next: (res) => {
         this.workerList = res.content
         this.totalPages = res.totalPages
         this.filteredData = res.content.length != 0;
+        this.dataLoading = false;
       }
     })
   }
 
   public getUserByEmail(): void {
-    this.authService.getAccountByEmail(this.worker.email).subscribe({
+    this.userService.getAccount(this.worker.email).subscribe({
       next: (res) => {
         this.user = res
         console.log(res)
@@ -65,7 +78,7 @@ export class ListWorkerComponent implements OnInit {
 
   public updateAccount(): void {
     if (this.user.enabled) {
-      this.authService.activateAccount(this.user).subscribe({
+      this.userService.activateAccount(this.user.email).subscribe({
         error: (err) => {
           if (err.status === 200) {
             this.getWorkerListByCompany(0)
@@ -79,7 +92,7 @@ export class ListWorkerComponent implements OnInit {
         }
       })
     } else {
-      this.authService.disableAccount(this.user).subscribe({
+      this.userService.disableAccount(this.user.email).subscribe({
         error: (err) => {
           if (err.status === 200) {
             this.getWorkerListByCompany(0)

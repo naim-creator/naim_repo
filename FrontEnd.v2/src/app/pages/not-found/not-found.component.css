@@ -1,0 +1,13 @@
+.container-fluid{
+  background-color: #3b7ddd;
+}
+
+.message{
+  font-size: 4rem;
+  color: white;
+  text-transform: capitalize;
+}
+
+.message span{
+  font-weight: 700;
+}
